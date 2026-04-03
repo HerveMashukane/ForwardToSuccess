@@ -8,7 +8,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Brand colors
         'brand-primary': '#B91C1C',
         'brand-primary-hover': '#991B1B',
         'brand-secondary': '#1D4ED8',
@@ -23,19 +22,43 @@ export default {
         'small': ['0.875rem', { lineHeight: '1.25', fontWeight: '400' }],
       },
       borderRadius: {
-        // Better radius system
-        'btnRadius': '9999px',   // fully rounded (pill)
-        'inputRadius': '0.5rem', // medium rounded (clean + modern)
+        'btnRadius': '9999px',
+        'inputRadius': '0.5rem',
       },
       boxShadow: {
         'btnShadow': '0 2px 6px rgba(0,0,0,0.15)',
         'inputShadow': '0 1px 3px rgba(0,0,0,0.1)',
+        'glow': '0 0 30px rgba(29,78,216,0.3)',
       },
       spacing: {
         'btnY': '0.625rem',
         'btnX': '1.25rem',
         'inputY': '0.5rem',
         'inputX': '0.75rem',
+      },
+      keyframes: {
+        ovalUp: {
+          '0%, 100%': { transform: 'translateY(0) translateX(0)' },
+          '50%': { transform: 'translateY(-60px) translateX(20px)' },
+        },
+        ovalDown: {
+          '0%, 100%': { transform: 'translateY(0) translateX(0)' },
+          '50%': { transform: 'translateY(60px) translateX(-20px)' },
+        },
+        glowPulse: {
+          '0%, 100%': { boxShadow: '0 0 30px rgba(29,78,216,0.3)' },
+          '50%': { boxShadow: '0 0 60px rgba(29,78,216,0.6)' },
+        },
+      },
+      animation: {
+        'ovalUp': 'ovalUp 8s ease-in-out infinite',
+        'oval-down': 'ovalDown 8s ease-in-out infinite',
+        'glow-pulse': 'glowPulse 4s ease-in-out infinite',
+      },
+      animation: {
+        'float-slow': 'floatSlow 10s ease-in-out infinite',
+        'float-fast': 'floatFast 7s ease-in-out infinite',
+        'glow-pulse': 'glowPulse 4s ease-in-out infinite',
       },
     },
   },

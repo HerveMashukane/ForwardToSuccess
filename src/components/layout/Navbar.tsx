@@ -12,10 +12,14 @@ export default function Navbar() {
       </div>
 
       {/* DESKTOP MENU */}
-      <div className="hidden md:flex items-center gap-6 text-body relative">
+      <div className="hidden md:flex items-center gap-6 text-body relative font-medium">
         <a href="#" className="flex items-center gap-2 hover:text-brand-primary">
-          <i className="bi bi-house"></i>
+          <i className="bi bi-house-fill"></i>
           Home
+        </a>
+        <a href="#" className="flex items-center gap-2 hover:text-brand-primary">
+          <i className="bi bi-info-circle-fill"></i>
+          About
         </a>
 
         {/* DROPDOWN */}
@@ -40,42 +44,36 @@ export default function Navbar() {
         </div>
 
         <a href="#" className="flex items-center gap-2 hover:text-brand-primary">
-          <i className="bi bi-laptop"></i>
+          <i className="bi bi-laptop-fill"></i>
           Computer Science
         </a>
 
         <a href="#" className="flex items-center gap-2 hover:text-brand-primary">
-          <i className="bi bi-journal-bookmark"></i>
+          <i className="bi bi-journal-bookmark-fill"></i>
           Courses
-        </a>
-
-        <a href="#" className="flex items-center gap-2 hover:text-brand-primary">
-          <i className="bi bi-people"></i>
-          About
         </a>
 
         {/* NEW TEAM LINK */}
         <a href="#" className="flex items-center gap-2 hover:text-brand-primary">
-          <i className="bi bi-person-badge"></i>
-          Team
+          <i className="bi bi-person-badge-fill"></i>
+          Our Team
         </a>
 
         <a href="#" className="flex items-center gap-2 hover:text-brand-primary">
-          <i className="bi bi-envelope"></i>
+          <i className="bi bi-envelope-fill"></i>
           Contact
         </a>
       </div>
 
       {/* RIGHT SIDE */}
       <div className="hidden md:flex items-center gap-4">
-        <button className="border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white py-btnY px-btnX rounded-btnRadius transition">
-          Login
-        </button>
-
         <button className="bg-brand-secondary hover:bg-brand-secondary-hover text-white py-btnY px-btnX rounded-btnRadius shadow-btnShadow flex items-center gap-2 transition">
           <i className="bi bi-heart-fill"></i>
           Donate
         </button>
+        {/* <button className="border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white py-btnY px-btnX rounded-btnRadius transition">
+          Login
+        </button> */}
       </div>
 
       {/* MOBILE BUTTON */}
