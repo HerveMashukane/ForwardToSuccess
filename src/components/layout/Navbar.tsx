@@ -3,18 +3,24 @@ import { useState } from "react";
 export default function Navbar() {
 
   return (
-    <nav>
-      <div className="bg-brand-background text-brand-primary font-base">
-  Hello
-</div>
-
-<button className="bg-brand-primary hover:bg-brand-primary-hover text-white py-btn-y px-btn-x rounded-btn">
-  Primary Button
-</button>
-
-<button className="bg-brand-secondary hover:bg-brand-secondary-hover text-white py-btn-y px-btn-x rounded-btn">
-  Secondary Button
-</button>
+    <nav className="flex justify-between items-center p-8 bg-brand-background font-medium">
+      {/* logo */}
+      <div>
+        <h1 className="text-heading2 text-brand-secondary">LogoHere</h1>
+      </div>
+      {/* navigation links */}
+      <div className="flex space-x-8">
+        <ul className="flex space-x-4 text-body1">
+          <li>Home</li>
+          <li>About</li>
+          <li>Our Team</li>
+          <li>Services</li>
+          <li>Contact</li>
+        </ul>
+        <div>
+          <button className="bg-brand-primary text-white px-btnX py-btnY rounded-btnRadius">Register</button>
+          </div>
+      </div>
     </nav>
   );
 }

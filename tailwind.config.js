@@ -9,14 +9,13 @@ export default {
     extend: {
       colors: {
         // Brand colors
-        'brand-primary': '#B91C1C',         // red-700
-        'brand-primary-hover': '#991B1B',   // hover
-        'brand-secondary': '#1D4ED8',       // blue-700
-        'brand-secondary-hover': '#1E40AF', // hover
-        'brand-background': '#FFFFFF',      // global white background
+        'brand-primary': '#B91C1C',
+        'brand-primary-hover': '#991B1B',
+        'brand-secondary': '#1D4ED8',
+        'brand-secondary-hover': '#1E40AF',
+        'brand-background': '#FFFFFF',
       },
       fontSize: {
-        // Font sizes
         'heading1': ['3rem', { lineHeight: '1.2', fontWeight: '700' }],
         'heading2': ['2.25rem', { lineHeight: '1.3', fontWeight: '700' }],
         'heading3': ['1.875rem', { lineHeight: '1.3', fontWeight: '600' }],
@@ -24,17 +23,15 @@ export default {
         'small': ['0.875rem', { lineHeight: '1.25', fontWeight: '400' }],
       },
       borderRadius: {
-        // Distinct radii
-        'btnRadius': '0.5rem',
-        'inputRadius': '0.375rem',
+        // Better radius system
+        'btnRadius': '9999px',   // fully rounded (pill)
+        'inputRadius': '0.5rem', // medium rounded (clean + modern)
       },
       boxShadow: {
-        // Distinct shadows
         'btnShadow': '0 2px 6px rgba(0,0,0,0.15)',
         'inputShadow': '0 1px 3px rgba(0,0,0,0.1)',
       },
       spacing: {
-        // Distinct spacing for buttons/inputs
         'btnY': '0.625rem',
         'btnX': '1.25rem',
         'inputY': '0.5rem',
