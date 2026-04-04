@@ -37,16 +37,9 @@ export default function Navbar() {
             <div className="absolute top-10 left-0 bg-white shadow-lg rounded-inputRadius p-3 flex flex-col gap-2 min-w-[180px]">
               <a href="#" className="hover:text-brand-primary">English</a>
               <a href="#" className="hover:text-brand-primary">French</a>
-              <a href="#" className="hover:text-brand-primary">Spanish</a>
-              <a href="#" className="hover:text-brand-primary">Chinese</a>
             </div>
           )}
         </div>
-
-        <a href="#" className="flex items-center gap-2 hover:text-brand-primary">
-          <i className="bi bi-laptop-fill"></i>
-          Computer Science
-        </a>
 
         <a href="#" className="flex items-center gap-2 hover:text-brand-primary">
           <i className="bi bi-journal-bookmark-fill"></i>

@@ -30,27 +30,27 @@
                         <ul className="flex space-x-4">
                             <li className="flex flex-col items-center">
                                 facebook
-                                <span><i className="bi bi-facebook text-2xl"></i></span>
+                                <span><i className="bi bi-facebook text-3xl text-brand-secondary ;"></i></span>
                             </li>
                             <li className="flex flex-col items-center">
                                 whatsapp
-                                <span><i className="bi bi-whatsapp text-2xl"></i></span>
+                                <span><i className="bi bi-whatsapp text-3xl text-green-700"></i></span>
                             </li>
                             <li className="flex flex-col items-center">
                                 tiktok
-                                <span><i className="bi bi-tiktok text-2xl"></i></span>
+                                <span><i className="bi bi-tiktok text-3xl text-gray-300"></i></span>
                             </li>
                             <li className="flex flex-col items-center">
                                 yutube
-                                <span><i className="bi bi-youtube text-2xl"></i></span>
+                                <span><i className="bi bi-youtube text-3xl text-brand-primary"></i></span>
                             </li>
                         </ul>
                     </div>
 
                     <div>
                         <h4 className="text-white mb-3">Contact</h4>
-                        <p>Email: contact@forwardtosuccess.com</p>
-                        <p>Phone: +243 XXX XXX XXX</p>
+                        <p>Email: forwardtosuccess@gmail.com</p>
+                        <p>Phone: +243 985 219 157</p>
                     </div>
                 </div>
 
