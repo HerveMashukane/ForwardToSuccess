@@ -4,6 +4,7 @@ import Navbar from './components/layout/Navbar';
 import About from './pages/About';
 import Courses from './pages/Courses';
 import Home from './pages/Home';
+import Team from './pages/Team';
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
       <Navbar />
       <Home />
       <About />
+      <Team />
       <Courses />
       <Footer />
     </>
