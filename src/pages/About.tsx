@@ -8,7 +8,7 @@ export default function About() {
       {/* ABOUT INTRO */}
       <section className="px-6 md:px-16 py-20 bg-gray-50">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-heading2 text-brand-secondary mb-6">
+          <h2 className="text-heading2 text-brand-primary mb-6">
             About Us
           </h2>
           <p className="text-lg text-gray-600">
@@ -44,22 +44,22 @@ export default function About() {
           {/* RIGHT STATS */}
           <div className="grid grid-cols-2 gap-6">
             <div className="bg-white p-6 rounded-inputRadius shadow-inputShadow text-center">
-              <h4 className="text-heading3 text-brand-primary mb-2">500+</h4>
+              <h4 className="text-heading3 text-brand-accent mb-2">500+</h4>
               <p className="text-gray-600 text-small">Students Trained</p>
             </div>
 
             <div className="bg-white p-6 rounded-inputRadius shadow-inputShadow text-center">
-              <h4 className="text-heading3 text-brand-primary mb-2">5+</h4>
+              <h4 className="text-heading3 text-brand-accent mb-2">5+</h4>
               <p className="text-gray-600 text-small">Courses Offered</p>
             </div>
 
             <div className="bg-white p-6 rounded-inputRadius shadow-inputShadow text-center">
-              <h4 className="text-heading3 text-brand-primary mb-2">Free</h4>
+              <h4 className="text-heading3 text-brand-accent mb-2">Free</h4>
               <p className="text-gray-600 text-small">Language Programs</p>
             </div>
 
             <div className="bg-white p-6 rounded-inputRadius shadow-inputShadow text-center">
-              <h4 className="text-heading3 text-brand-primary mb-2">Expert</h4>
+              <h4 className="text-heading3 text-brand-accent mb-2">Expert</h4>
               <p className="text-gray-600 text-small">Certified Trainers</p>
             </div>
           </div>
@@ -68,7 +68,7 @@ export default function About() {
 
       {/* VALUES */}
       <section className="px-6 md:px-16 py-20">
-        <h2 className="text-heading2 text-center mb-12 text-brand-secondary">
+        <h2 className="text-heading2 text-center mb-12 text-brand-primary">
           Our Core Values
         </h2>
 
@@ -88,7 +88,7 @@ export default function About() {
             },
           ].map((item, i) => (
             <div key={i} className="bg-gray-50 p-6 rounded-inputRadius text-center hover:shadow-btnShadow transition">
-              <h3 className="text-heading3 mb-3 text-brand-primary">{item.title}</h3>
+              <h3 className="text-heading3 mb-3 text-brand-accent">{item.title}</h3>
               <p className="text-gray-600">{item.desc}</p>
             </div>
           ))}
@@ -105,7 +105,7 @@ export default function About() {
           Join hundreds of learners transforming their future with us.
         </p>
 
-        <button className="bg-white text-brand-primary py-btnY px-btnX rounded-btnRadius shadow-btnShadow font-bold hover:bg-gray-200 transition">
+        <button className="bg-white text-brand-secondary py-btnY px-btnX rounded-btnRadius shadow-btnShadow font-bold hover:bg-gray-200 transition">
           Join Now
         </button>
       </section>

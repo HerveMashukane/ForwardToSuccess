@@ -8,10 +8,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        'brand-primary': '#B91C1C',
-        'brand-primary-hover': '#991B1B',
-        'brand-secondary': '#1D4ED8',
-        'brand-secondary-hover': '#1E40AF',
+        'brand-accent': '#B91C1C',
+        'brand-accent-hover': '#991B1B',
+        'brand-primary': '#1D4ED8',
+        'brand-primary-hover': '#1E40AF',
         'brand-background': '#FFFFFF',
       },
       fontSize: {

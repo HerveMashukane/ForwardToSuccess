@@ -44,12 +44,12 @@ export default function Home() {
       <section className="relative px-6 md:px-16 py-20 grid md:grid-cols-2 gap-12 items-center overflow-hidden">
       {/* LEFT: Animated Text */}
           <div className="relative z-10">
-              <h1 className="text-heading2 md:text-heading1 font-bold text-brand-secondary leading-tight mb-6">
-              Build Your Future with <span className="text-brand-primary">Forward To Success</span>
+              <h1 className="text-heading2 md:text-heading1 font-bold text-brand-primary leading-tight mb-6">
+              Build Your Future with <span className="text-brand-accent">Forward To Success</span>
               </h1>
               <h2 className="text-heading3 md:text-heading2 font-bold text-gray-900 leading-tight mb-6">
-              <span className="text-brand-primary">{displayText}</span>
-              <span className="ml-1 animate-pulse text-brand-primary">|</span>
+              <span className="text-brand-accent">{displayText}</span>
+              <span className="ml-1 animate-pulse text-brand-accent">|</span>
               </h2>
 
               <p className="text-lg text-gray-600 mb-8">
@@ -59,7 +59,7 @@ export default function Home() {
 
               {/* CTA */}
               <div className="flex flex-wrap gap-4 mb-6">
-              <button className="bg-brand-primary hover:bg-brand-primary-hover text-white px-btnX py-btnY rounded-btnRadius shadow-btnShadow font-semibold transition">
+              <button className="bg-brand-accent hover:bg-brand-accent-hover text-white px-btnX py-btnY rounded-btnRadius shadow-btnShadow font-semibold transition">
                   Start Learning
               </button>
               <button className="border border-gray-300 text-gray-700 px-btnX py-btnY rounded-btnRadius hover:bg-gray-100 transition font-semibold">
@@ -74,7 +74,7 @@ export default function Home() {
                   <span>500+ Students</span>
               </div>
               <div className="flex items-center gap-2">
-                  <i className="bi bi-patch-check-fill text-brand-secondary"></i>
+                  <i className="bi bi-patch-check-fill text-brand-primary"></i>
                   <span>Certified Trainers</span>
               </div>
               <div className="flex items-center gap-2">
