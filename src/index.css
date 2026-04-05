@@ -2,13 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
     margin: 0;
     padding: 0;
-    background-color: #ececec;
-    font-family: 'Inter', sans-serif;
-}
+    background-color: theme("colors.page");
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Montserrat', sans-serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Montserrat", system-ui, sans-serif;
+  }
 }

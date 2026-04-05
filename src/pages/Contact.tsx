@@ -1,10 +1,13 @@
-import { memo, useState } from "react";
+import { memo, useCallback, useRef, useState } from "react";
+import { inputBase } from "../lib/ui";
+
+const RATE_LIMIT_MS = 10_000;
 
 const faqs = [
   {
     question: "How do I enroll in a course?",
     answer:
-      "Click on 'Start Learning' and follow the registration process.",
+      "Use Start Learning on the home page or contact us — we will guide you through registration.",
   },
   {
     question: "Are courses free?",
@@ -13,8 +16,7 @@ const faqs = [
   },
   {
     question: "Do I receive a certificate?",
-    answer:
-      "Yes, certificates are issued upon successful completion.",
+    answer: "Yes, certificates are issued upon successful completion.",
   },
   {
     question: "Is support available?",
@@ -23,242 +25,271 @@ const faqs = [
   },
 ];
 
+type ToastState =
+  | { phase: "in"; message: string; variant: "success" | "error" }
+  | { phase: "out"; message: string; variant: "success" | "error" };
+
+function runValidation(field: string, value: string): string {
+  if (field === "name" && value.trim().length < 3) {
+    return "Please enter at least 3 characters.";
+  }
+  if (field === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+    return "Please enter a valid email address.";
+  }
+  if (field === "message" && value.trim().length < 10) {
+    return "Your message should be at least 10 characters.";
+  }
+  return "";
+}
+
 const Contact = () => {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const [errors, setErrors] = useState<any>({});
-  const [touched, setTouched] = useState<any>({});
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState<"idle" | "show" | "hide">("idle");
+  const [toast, setToast] = useState<ToastState | null>(null);
   const [activeFAQ, setActiveFAQ] = useState<number | null>(null);
-  const [lastSubmit, setLastSubmit] = useState<number>(0);
+  const [lastSubmit, setLastSubmit] = useState(0);
+  const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // VALIDATION
-  const validate = (field: string, value: string) => {
-    let error = "";
+  const validateField = useCallback((field: string, value: string) => {
+    const error = runValidation(field, value);
+    setErrors((prev) => ({ ...prev, [field]: error }));
+    return error;
+  }, []);
 
-    if (field === "name" && value.trim().length < 3) {
-      error = "Please enter at least 3 characters.";
-    }
+  const validateAll = useCallback(() => {
+    const next: Record<string, string> = {
+      name: runValidation("name", form.name),
+      email: runValidation("email", form.email),
+      message: runValidation("message", form.message),
+    };
+    setErrors(next);
+    return !Object.values(next).some(Boolean);
+  }, [form]);
 
-    if (
-      field === "email" &&
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-    ) {
-      error = "Please enter a valid email address.";
-    }
+  const showToast = useCallback(
+    (message: string, variant: "success" | "error") => {
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+        hideTimeoutRef.current = null;
+      }
+      setToast({ phase: "in", message, variant });
+      hideTimeoutRef.current = setTimeout(() => {
+        setToast((t) =>
+          t && t.phase === "in" ? { ...t, phase: "out" } : t
+        );
+      }, 2600);
+    },
+    []
+  );
 
-    if (field === "message" && value.trim().length < 10) {
-      error = "Your message should be at least 10 characters.";
-    }
-
-    setErrors((prev: any) => ({ ...prev, [field]: error }));
+  const handleToastAnimationEnd = () => {
+    setToast((t) => (t?.phase === "out" ? null : t));
   };
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-    validate(name, value);
+    setForm((f) => ({ ...f, [name]: value }));
+    validateField(name, value);
   };
 
-  const handleBlur = (e: any) => {
-    const { name } = e.target;
-    setTouched((prev: any) => ({ ...prev, [name]: true }));
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setTouched((prev) => ({ ...prev, [e.target.name]: true }));
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const now = Date.now();
-    if (now - lastSubmit < 10000) {
-      setToast("show");
+
+    if (now - lastSubmit < RATE_LIMIT_MS) {
+      const waitSec = Math.ceil(
+        (RATE_LIMIT_MS - (now - lastSubmit)) / 1000
+      );
+      showToast(
+        `Please wait about ${waitSec}s before sending another message.`,
+        "error"
+      );
       return;
     }
 
-    const hasErrors = Object.values(errors).some(Boolean);
-    const hasEmpty = Object.values(form).some((v) => !v);
-
-    if (hasErrors || hasEmpty) {
-      setTouched({ name: true, email: true, message: true });
-      return;
-    }
+    setTouched({ name: true, email: true, message: true });
+    if (!validateAll()) return;
 
     setLoading(true);
-
     await new Promise((res) => setTimeout(res, 1500));
-
     setLoading(false);
-    setLastSubmit(now);
+    setLastSubmit(Date.now());
 
-    setToast("show");
-    setTimeout(() => setToast("hide"), 2500);
-    setTimeout(() => setToast("idle"), 3000);
-
+    showToast("Message sent successfully.", "success");
     setForm({ name: "", email: "", message: "" });
     setTouched({});
   };
 
-  return (
-    <div className="px-6 md:px-16 py-20 bg-gray-50 relative">
+  const toastStyles =
+    toast?.variant === "error"
+      ? "bg-red-600"
+      : "bg-emerald-600";
 
-      {/* TOAST */}
-      {toast !== "idle" && (
+  return (
+    <div className="relative bg-page px-6 py-16 md:px-16 md:py-20">
+      {toast && (
         <div
-          className={`fixed top-6 right-6 px-6 py-3 rounded-lg shadow-lg text-white
-          ${toast === "show" ? "bg-green-500 animate-toastIn" : "bg-green-500 animate-toastOut"}`}
+          role="status"
+          aria-live="polite"
+          onAnimationEnd={handleToastAnimationEnd}
+          className={`fixed right-6 top-6 z-[70] max-w-sm rounded-inputRadius px-5 py-3 text-sm font-medium text-white shadow-lg ${toastStyles} ${
+            toast.phase === "in" ? "animate-toastIn" : "animate-toastOut"
+          }`}
         >
-          Message sent successfully
+          {toast.message}
         </div>
       )}
 
-      {/* TITLE */}
-      <div className="text-center mb-16 max-w-2xl mx-auto">
-        <h2 className="text-heading2 text-brand-secondary mb-4">
-          Contact Us
-        </h2>
+      <div className="mx-auto mb-14 max-w-2xl text-center">
+        <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-brand-primary">
+          We are here to help
+        </p>
+        <h1 className="mb-4 text-heading2 font-bold text-brand-secondary">
+          Contact us
+        </h1>
         <p className="text-gray-600">
-          Reach out to us or explore frequently asked questions.
+          Send a message or browse answers to common questions.
         </p>
       </div>
 
-      {/* GRID */}
-      <div className="grid md:grid-cols-2 gap-12">
-
-        {/* FORM */}
+      <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2">
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-8 rounded-xl shadow-md space-y-6"
+          className="space-y-6 rounded-2xl border border-gray-100 bg-white p-8 shadow-section"
+          noValidate
         >
-          <h3 className="text-heading3 text-brand-primary">
-            Send a Message
-          </h3>
+          <h2 className="text-heading3 font-semibold text-brand-primary">
+            Send a message
+          </h2>
 
-          {["name", "email"].map((field) => (
+          {(["name", "email"] as const).map((field) => (
             <div key={field} className="relative">
               <input
                 type={field === "email" ? "email" : "text"}
                 name={field}
-                value={form[field as keyof typeof form]}
+                id={`contact-${field}`}
+                value={form[field]}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 placeholder=" "
-                className={`peer w-full px-4 pt-5 pb-2 rounded-lg border
-                ${
+                autoComplete={field === "email" ? "email" : "name"}
+                className={`${inputBase} border-gray-300 focus:ring-brand-primary ${
                   touched[field] && errors[field]
                     ? "border-red-400 focus:ring-red-400"
-                    : "border-gray-300 focus:ring-brand-primary"
-                }
-                focus:outline-none focus:ring-2`}
+                    : ""
+                }`}
               />
-
-              <label className="absolute left-4 top-2 text-gray-500 text-sm transition-all
-                peer-placeholder-shown:top-3.5
-                peer-placeholder-shown:text-base
-                peer-focus:top-2
-                peer-focus:text-sm
-                peer-focus:text-brand-primary">
-                {field === "name" ? "Full Name" : "Email"}
+              <label
+                htmlFor={`contact-${field}`}
+                className="pointer-events-none absolute left-4 top-2 text-sm text-gray-500 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-sm peer-focus:text-brand-primary"
+              >
+                {field === "name" ? "Full name" : "Email"}
               </label>
-
               {touched[field] && errors[field] && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors[field]}
-                </p>
+                <p className="mt-1 text-xs text-red-600">{errors[field]}</p>
               )}
             </div>
           ))}
 
-          {/* TEXTAREA */}
           <div className="relative">
             <textarea
               name="message"
+              id="contact-message"
               rows={4}
               value={form.message}
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder=" "
-              className={`peer w-full px-4 pt-5 pb-2 rounded-lg border
-              ${
+              className={`${inputBase} min-h-[120px] resize-y border-gray-300 focus:ring-brand-primary ${
                 touched.message && errors.message
                   ? "border-red-400 focus:ring-red-400"
-                  : "border-gray-300 focus:ring-brand-primary"
-              }
-              focus:outline-none focus:ring-2`}
+                  : ""
+              }`}
             />
-
-            <label className="absolute left-4 top-2 text-gray-500 text-sm transition-all
-              peer-placeholder-shown:top-3.5
-              peer-focus:top-2
-              peer-focus:text-brand-primary">
+            <label
+              htmlFor="contact-message"
+              className="pointer-events-none absolute left-4 top-2 text-sm text-gray-500 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-sm peer-focus:text-brand-primary"
+            >
               Message
             </label>
-
             {touched.message && errors.message && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.message}
-              </p>
+              <p className="mt-1 text-xs text-red-600">{errors.message}</p>
             )}
           </div>
 
-          {/* BUTTON */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-brand-primary text-white py-3 rounded-lg font-semibold
-              flex items-center justify-center gap-2
-              disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-2 rounded-btnRadius bg-brand-primary py-3 font-semibold text-white shadow-btnShadow transition duration-200 hover:bg-brand-primary-hover disabled:pointer-events-none disabled:opacity-60"
           >
             {loading ? (
               <>
-                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                Sending...
+                <span
+                  className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"
+                  aria-hidden
+                />
+                Sending…
               </>
             ) : (
-              "Send Message"
+              "Send message"
             )}
           </button>
         </form>
 
-        {/* FAQ */}
         <div>
-          <h3 className="text-heading3 text-brand-secondary mb-6">
+          <h2 className="mb-6 text-heading3 font-semibold text-brand-secondary">
             FAQs
-          </h3>
-
-          <div className="space-y-4">
+          </h2>
+          <div className="space-y-3">
             {faqs.map((faq, index) => (
               <div
-                key={index}
-                className="bg-white rounded-lg shadow overflow-hidden"
+                key={faq.question}
+                className="overflow-hidden rounded-inputRadius border border-gray-100 bg-white shadow-sm transition hover:shadow-md"
               >
                 <button
+                  type="button"
+                  id={`faq-${index}`}
+                  aria-expanded={activeFAQ === index}
+                  aria-controls={`faq-panel-${index}`}
                   onClick={() =>
                     setActiveFAQ(activeFAQ === index ? null : index)
                   }
-                  className="w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-100"
+                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-sm font-medium text-gray-900 transition hover:bg-gray-50"
                 >
-                  <span>{faq.question}</span>
-                  <span>{activeFAQ === index ? "-" : "+"}</span>
+                  <span className="font-semibold">{faq.question}</span>
+                  <span
+                    className={`text-brand-accent transition-transform duration-300 ${
+                      activeFAQ === index ? "rotate-180" : ""
+                    }`}
+                    aria-hidden
+                  >
+                    <i className="bi bi-chevron-down" />
+                  </span>
                 </button>
-
                 <div
-                  className={`px-6 transition-all duration-300 ${
-                    activeFAQ === index
-                      ? "max-h-40 py-4 opacity-100"
-                      : "max-h-0 opacity-0 overflow-hidden"
+                  id={`faq-panel-${index}`}
+                  role="region"
+                  aria-labelledby={`faq-${index}`}
+                  className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+                    activeFAQ === index ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                   }`}
                 >
-                  <p className="text-sm text-gray-600">{faq.answer}</p>
+                  <div className="min-h-0 overflow-hidden">
+                    <p className="px-5 pb-4 text-sm leading-relaxed text-gray-600">
+                      {faq.answer}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
-
       </div>
     </div>
   );
