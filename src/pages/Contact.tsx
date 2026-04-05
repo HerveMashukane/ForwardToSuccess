@@ -1,138 +1,187 @@
 import { memo, useState } from "react";
 
-const faqs = [
-  {
-    question: "How do I enroll in a course?",
-    answer:
-      'You can enroll by clicking the "Start Learning" button on our homepage and following the steps.',
-  },
-  {
-    question: "Are there any fees for the courses?",
-    answer:
-      "Our language programs are free. Some advanced courses require a small fee.",
-  },
-  {
-    question: "Do I get a certificate?",
-    answer:
-      "Yes, you will receive a certificate after completing your course.",
-  },
-  {
-    question: "Do you offer support?",
-    answer:
-      "Yes, our team is available to guide you throughout your learning journey.",
-  },
-];
-
 const Contact = () => {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
-  const toggleFAQ = (index: number) => {
-    setActiveIndex(activeIndex === index ? null : index);
+  const [errors, setErrors] = useState<any>({});
+  const [submitted, setSubmitted] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+
+  // VALIDATION
+  const validate = (field: string, value: string) => {
+    let error = "";
+
+    if (field === "name" && value.trim().length < 3) {
+      error = "Name must be at least 3 characters";
+    }
+
+    if (
+      field === "email" &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+    ) {
+      error = "Invalid email format";
+    }
+
+    if (field === "message" && value.trim().length < 10) {
+      error = "Message must be at least 10 characters";
+    }
+
+    setErrors((prev: any) => ({ ...prev, [field]: error }));
+  };
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+    validate(name, value);
+  };
+
+  // SUBMIT
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    // Check errors
+    const hasErrors = Object.values(errors).some((e) => e);
+    const hasEmpty = Object.values(form).some((v) => !v);
+
+    if (hasErrors || hasEmpty) return;
+
+    // Success state
+    setSubmitted(true);
+    setShowToast(true);
+
+    setTimeout(() => {
+      setShowToast(false);
+    }, 3000);
+
+    // Reset form
+    setForm({ name: "", email: "", message: "" });
   };
 
   return (
-    <div className="px-6 md:px-16 py-20 bg-gray-50">
+    <div className="px-6 md:px-16 py-20 bg-gray-50 relative">
 
-      {/* TITLE */}
-      <div className="text-center mb-16 max-w-2xl mx-auto">
-        <h2 className="text-heading2 text-brand-secondary mb-4">
-          Contact Us
-        </h2>
-        <p className="text-gray-600">
-          Have questions or want to get started? Send us a message or explore our FAQs.
-        </p>
-      </div>
+      {/* TOAST */}
+      {showToast && (
+        <div className="fixed top-6 right-6 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg animate-bounce">
+          Message sent successfully 🚀
+        </div>
+      )}
 
-      {/* GRID */}
-      <div className="grid md:grid-cols-2 gap-12 items-start">
+      {/* SUCCESS STATE */}
+      {submitted && (
+        <div className="text-center mb-10 animate-fade-in">
+          <h3 className="text-green-600 text-xl font-bold">
+            ✅ Your message has been sent!
+          </h3>
+        </div>
+      )}
 
-        {/* LEFT: FORM */}
-        <div className="bg-white p-8 rounded-inputRadius shadow-inputShadow">
+      <div className="grid md:grid-cols-2 gap-12">
 
-          <h3 className="text-heading3 text-brand-primary mb-6">
+        {/* FORM */}
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white p-8 rounded-xl shadow-md space-y-6"
+        >
+          <h3 className="text-xl font-bold text-brand-primary">
             Send a Message
           </h3>
 
-          <form className="space-y-5">
-
-            {/* NAME */}
-            <div>
-              <label className="block text-sm mb-1 font-medium">Full Name</label>
+          {/* FLOATING INPUT COMPONENT */}
+          {["name", "email"].map((field) => (
+            <div key={field} className="relative">
               <input
-                type="text"
-                placeholder="Enter your full name"
-                className="w-full px-4 py-3 rounded-inputRadius border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-primary transition"
+                type={field === "email" ? "email" : "text"}
+                name={field}
+                value={form[field as keyof typeof form]}
+                onChange={handleChange}
+                className="peer w-full border border-gray-300 px-4 pt-5 pb-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
+                placeholder=" "
               />
+              <label className="absolute left-4 top-2 text-gray-500 text-sm transition-all 
+                peer-placeholder-shown:top-3.5 
+                peer-placeholder-shown:text-base 
+                peer-placeholder-shown:text-gray-400
+                peer-focus:top-2 
+                peer-focus:text-sm 
+                peer-focus:text-brand-primary">
+                {field === "name" ? "Full Name" : "Email"}
+              </label>
+
+              {errors[field] && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors[field]}
+                </p>
+              )}
             </div>
+          ))}
 
-            {/* EMAIL */}
-            <div>
-              <label className="block text-sm mb-1 font-medium">Email</label>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-4 py-3 rounded-inputRadius border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-primary transition"
-              />
-            </div>
+          {/* TEXTAREA */}
+          <div className="relative">
+            <textarea
+              name="message"
+              rows={4}
+              value={form.message}
+              onChange={handleChange}
+              className="peer w-full border border-gray-300 px-4 pt-5 pb-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
+              placeholder=" "
+            ></textarea>
 
-            {/* MESSAGE */}
-            <div>
-              <label className="block text-sm mb-1 font-medium">Message</label>
-              <textarea
-                rows={4}
-                placeholder="Write your message..."
-                className="w-full px-4 py-3 rounded-inputRadius border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-primary transition"
-              ></textarea>
-            </div>
+            <label className="absolute left-4 top-2 text-gray-500 text-sm transition-all 
+              peer-placeholder-shown:top-3.5 
+              peer-placeholder-shown:text-base 
+              peer-placeholder-shown:text-gray-400
+              peer-focus:top-2 
+              peer-focus:text-sm 
+              peer-focus:text-brand-primary">
+              Message
+            </label>
 
-            {/* BUTTON */}
-            <button
-              type="submit"
-              className="w-full bg-brand-primary text-white py-3 rounded-btnRadius font-semibold shadow-btnShadow hover:bg-brand-primary-hover transition"
-            >
-              Send Message
-            </button>
-          </form>
-        </div>
+            {errors.message && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.message}
+              </p>
+            )}
+          </div>
 
-        {/* RIGHT: FAQ */}
-        <div>
+          {/* BUTTON */}
+          <button
+            type="submit"
+            className="w-full bg-brand-primary text-white py-3 rounded-lg font-semibold hover:scale-[1.02] transition transform"
+          >
+            Send Message
+          </button>
+        </form>
 
-          <h3 className="text-heading3 text-brand-secondary mb-6">
-            Frequently Asked Questions
+        {/* SIMPLE FAQ (kept clean) */}
+        <div className="space-y-4">
+          <h3 className="text-xl font-bold text-brand-secondary">
+            FAQs
           </h3>
 
-          <div className="space-y-4">
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h4 className="font-medium">How do I enroll?</h4>
+            <p className="text-sm text-gray-600">
+              Click "Start Learning" and follow instructions.
+            </p>
+          </div>
 
-            {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-inputRadius shadow-inputShadow overflow-hidden"
-              >
-                {/* QUESTION */}
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-100 transition"
-                >
-                  <span className="font-medium">{faq.question}</span>
-                  <span className="text-brand-primary">
-                    {activeIndex === index ? "-" : "+"}
-                  </span>
-                </button>
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h4 className="font-medium">Are courses free?</h4>
+            <p className="text-sm text-gray-600">
+              Language courses are free; others may require a fee.
+            </p>
+          </div>
 
-                {/* ANSWER */}
-                <div
-                  className={`px-6 transition-all duration-300 ${
-                    activeIndex === index
-                      ? "max-h-40 py-4 opacity-100"
-                      : "max-h-0 opacity-0 overflow-hidden"
-                  }`}
-                >
-                  <p className="text-gray-600 text-sm">{faq.answer}</p>
-                </div>
-              </div>
-            ))}
-
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h4 className="font-medium">Do I get a certificate?</h4>
+            <p className="text-sm text-gray-600">
+              Yes, after completion.
+            </p>
           </div>
         </div>
       </div>
