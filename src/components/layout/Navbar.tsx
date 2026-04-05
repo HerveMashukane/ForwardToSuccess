@@ -22,6 +22,15 @@ export default function Navbar() {
           About
         </a>
 
+        <a href="#" className="flex items-center gap-2 hover:text-brand-accent">
+          <i className="bi bi-journal-bookmark-fill"></i>
+          Programs
+        </a>
+
+        <a href="#" className="flex items-center gap-2 hover:text-brand-accent">
+          <i className="bi bi-envelope-fill"></i>
+          Contact
+        </a>
         {/* DROPDOWN */}
         <div className="relative">
           <button
@@ -40,27 +49,11 @@ export default function Navbar() {
             </div>
           )}
         </div>
-
-        <a href="#" className="flex items-center gap-2 hover:text-brand-accent">
-          <i className="bi bi-journal-bookmark-fill"></i>
-          Courses
-        </a>
-
-        {/* NEW TEAM LINK */}
-        <a href="#" className="flex items-center gap-2 hover:text-brand-accent">
-          <i className="bi bi-person-badge-fill"></i>
-          Our Team
-        </a>
-
-        <a href="#" className="flex items-center gap-2 hover:text-brand-accent">
-          <i className="bi bi-envelope-fill"></i>
-          Contact
-        </a>
       </div>
 
       {/* RIGHT SIDE */}
       <div className="hidden md:flex items-center gap-4">
-        <button className="bg-brand-secondary hover:bg-brand-secondary-hover text-white py-btnY px-btnX rounded-btnRadius shadow-btnShadow flex items-center gap-2 transition">
+        <button className="bg-brand-accent hover:bg-brand-accent-hover text-white py-btnY px-btnX rounded-btnRadius shadow-btnShadow flex items-center gap-2 transition">
           <i className="bi bi-heart-fill"></i>
           Donate
         </button>
@@ -87,25 +80,9 @@ export default function Navbar() {
           Home
         </a>
 
-        <div className="flex flex-col gap-2">
-          <span className="flex items-center gap-2 font-semibold">
-            <i className="bi bi-translate"></i>
-            Languages
-          </span>
-          <a href="#" className="ml-6">English</a>
-          <a href="#" className="ml-6">French</a>
-          <a href="#" className="ml-6">Spanish</a>
-          <a href="#" className="ml-6">Chinese</a>
-        </div>
-
-        <a href="#" className="flex items-center gap-2">
-          <i className="bi bi-laptop"></i>
-          Computer Science
-        </a>
-
         <a href="#" className="flex items-center gap-2">
           <i className="bi bi-journal-bookmark"></i>
-          Courses
+          Programs
         </a>
 
         <a href="#" className="flex items-center gap-2">
@@ -113,22 +90,24 @@ export default function Navbar() {
           About
         </a>
 
-        {/* TEAM LINK MOBILE */}
-        <a href="#" className="flex items-center gap-2">
-          <i className="bi bi-person-badge"></i>
-          Team
-        </a>
-
         <a href="#" className="flex items-center gap-2">
           <i className="bi bi-envelope"></i>
           Contact
         </a>
+        <div className="flex flex-col gap-2">
+          <span className="flex items-center gap-2 font-semibold">
+            <i className="bi bi-translate"></i>
+            Languages
+          </span>
+          <a href="#" className="ml-6">English</a>
+          <a href="#" className="ml-6">French</a>
+        </div>
 
-        <button className="border border-brand-primary text-brand-primary py-btnY px-btnX rounded-btnRadius mt-2">
+        {/* <button className="border border-brand-primary text-brand-primary py-btnY px-btnX rounded-btnRadius mt-2">
           Login
-        </button>
+        </button> */}
 
-        <button className="bg-brand-primary hover:bg-brand-primary-hover text-white py-btnY px-btnX rounded-btnRadius shadow-btnShadow flex items-center justify-center gap-2 mt-2">
+        <button className="bg-brand-accent hover:bg-brand-accent-hover text-white py-btnY px-btnX rounded-btnRadius shadow-btnShadow flex items-center justify-center gap-2 mt-2">
           <i className="bi bi-heart-fill"></i>
           Donate
         </button>

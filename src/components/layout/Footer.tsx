@@ -30,7 +30,7 @@
                         <ul className="flex space-x-4">
                             <li className="flex flex-col items-center">
                                 facebook
-                                <span><i className="bi bi-facebook text-3xl text-brand-secondary ;"></i></span>
+                                <span><i className="bi bi-facebook text-3xl text-brand-primary;"></i></span>
                             </li>
                             <li className="flex flex-col items-center">
                                 whatsapp
@@ -42,7 +42,7 @@
                             </li>
                             <li className="flex flex-col items-center">
                                 yutube
-                                <span><i className="bi bi-youtube text-3xl text-brand-primary"></i></span>
+                                <span><i className="bi bi-youtube text-3xl text-brand-accent"></i></span>
                             </li>
                         </ul>
                     </div>
@@ -57,7 +57,7 @@
                 <div className="text-center mt-10 text-small">
                     &copy;{new Date().getFullYear()}. Made with 
                     <span>
-                        <i className="bi bi-heart-fill text-brand-primary"></i>
+                        <i className="bi bi-heart-fill text-brand-accent"></i>
                     </span> by Hervé Mashukane. All rights reserved.
                 </div>
             </footer>

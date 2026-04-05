@@ -12,6 +12,8 @@ export default {
         'brand-accent-hover': '#991B1B',
         'brand-primary': '#1D4ED8',
         'brand-primary-hover': '#1E40AF',
+        'brand-secondary': '#374151;',
+        'brand-secondary-hover': '#1F2937',
         'brand-background': '#FFFFFF',
       },
       fontSize: {

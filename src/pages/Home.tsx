@@ -88,13 +88,13 @@ export default function Home() {
           <div className="relative flex justify-center items-center">
 
               {/* Top-left circle */}
-              <div className="absolute w-72 h-72 bg-brand-secondary/10 rounded-full -left-16 -top-16 z-0 animate-pulse"></div>
+              <div className="absolute w-72 h-72 bg-brand-primary/10 rounded-full -left-16 -top-16 z-0 animate-pulse"></div>
 
               {/* Hero Image */}
               <img src={heroBanner} alt="hero banner" className="relative z-10 rounded-xl shadow-lg" />
 
               {/* Bottom-right circle */}
-              <div className="absolute w-56 h-56 bg-brand-secondary/10 rounded-full -right-12 bottom-0 z-0 animate-pulse"></div>
+              <div className="absolute w-56 h-56 bg-brand-primary/10 rounded-full -right-12 bottom-0 z-0 animate-pulse"></div>
           </div>
       </section>
     </div>

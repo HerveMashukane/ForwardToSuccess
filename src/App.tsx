@@ -2,9 +2,9 @@ import './App.css'
 import Footer from './components/layout/Footer';
 import Navbar from './components/layout/Navbar';
 import About from './pages/About';
-import Courses from './pages/Courses';
+import Contact from './pages/Contact';
 import Home from './pages/Home';
-import Team from './pages/Team';
+import Programs from './pages/Programs';
 
 function App() {
 
@@ -13,8 +13,8 @@ function App() {
       <Navbar />
       <Home />
       <About />
-      <Team />
-      <Courses />
+      <Programs />
+      <Contact />
       <Footer />
     </>
   )
