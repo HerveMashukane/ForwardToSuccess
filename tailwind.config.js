@@ -39,13 +39,13 @@ export default {
         'inputX': '0.75rem',
       },
       keyframes: {
-        ovalUp: {
-          '0%, 100%': { transform: 'translateY(0) translateX(0)' },
-          '50%': { transform: 'translateY(-60px) translateX(20px)' },
+        toastIn: {
+          "0%": { opacity: "0", transform: "translateY(-20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        ovalDown: {
-          '0%, 100%': { transform: 'translateY(0) translateX(0)' },
-          '50%': { transform: 'translateY(60px) translateX(-20px)' },
+        toastOut: {
+          "0%": { opacity: "1", transform: "translateY(0)" },
+          "100%": { opacity: "0", transform: "translateY(-20px)" },
         },
         glowPulse: {
           '0%, 100%': { boxShadow: '0 0 30px rgba(29,78,216,0.3)' },
@@ -53,14 +53,9 @@ export default {
         },
       },
       animation: {
-        'ovalUp': 'ovalUp 8s ease-in-out infinite',
-        'oval-down': 'ovalDown 8s ease-in-out infinite',
-        'glow-pulse': 'glowPulse 4s ease-in-out infinite',
-      },
-      animation: {
-        'float-slow': 'floatSlow 10s ease-in-out infinite',
-        'float-fast': 'floatFast 7s ease-in-out infinite',
-        'glow-pulse': 'glowPulse 4s ease-in-out infinite',
+        'glow-pulse': "glowPulse 4s ease-in-out infinite",
+        'toastIn': "toastIn 0.4s ease-out",
+        'toastOut': "toastOut 0.3s ease-in forwards",
       },
     },
   },
