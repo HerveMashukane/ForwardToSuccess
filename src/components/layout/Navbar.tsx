@@ -27,6 +27,27 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // check screen size on resize and clode
+  useEffect(() => {
+  const mediaQuery = window.matchMedia("(min-width: 768px)");
+
+  const handleResize = (e: MediaQueryListEvent | MediaQueryList) => {
+    if (e.matches) {
+      setIsOpen(false); // close menu when switching to desktop
+    }
+  };
+
+  // Run once on mount
+  handleResize(mediaQuery);
+
+  // Listen for changes
+  mediaQuery.addEventListener("change", handleResize);
+
+  return () => {
+    mediaQuery.removeEventListener("change", handleResize);
+  };
+}, []);
+
   return (
     <nav className="sticky top-0 z-50 border-b border-gray-200/80 bg-brand-background/90 backdrop-blur-md">
       
