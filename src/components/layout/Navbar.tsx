@@ -92,23 +92,14 @@ export default function Navbar() {
                 </button>
 
                 {langOpen && (
-                  <>
-                    {/* Overlay */}
-                    <div
-                      className="fixed inset-0 bg-black/30 z-40 transition-opacity"
-                      onClick={() => setLangOpen(false)}
-                    />
-
-                    {/* Dropdown */}
-                    <div className="absolute top-10 left-0 w-44 rounded-lg border bg-white shadow-lg z-50">
-                      <div className="p-3 text-xs text-gray-400 uppercase">
-                        Coming soon
-                      </div>
-                      <div className="px-3 pb-3 text-sm text-gray-600">
-                        English / French
-                      </div>
+                  <div className="absolute top-10 left-0 w-44 rounded-lg border bg-white/80 backdrop-blur-sm shadow-lg z-50">
+                    <div className="p-3 text-xs text-gray-400 uppercase">
+                      Coming soon
                     </div>
-                  </>
+                    <div className="px-3 pb-3 text-sm text-gray-600">
+                      English / French
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
@@ -131,27 +122,42 @@ export default function Navbar() {
 
         {/* MOBILE DROPDOWN */}
         {isOpen && (
-          <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg rounded-b-lg animate-toastIn z-50">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                end={link.end}
-                className={navLinkClass}
+          <>
+            {/* Overlay behind mobile menu */}
+            <div
+              className="fixed inset-0 bg-black/30 z-40"
+              onClick={closeMobile}
+            />
+
+            <div className="md:hidden absolute top-full left-0 w-full bg-white backdrop-blur-sm shadow-lg rounded-b-lg animate-toastIn z-50">
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  end={link.end}
+                  className={navLinkClass}
+                  onClick={closeMobile}
+                >
+                  <i className={`bi ${link.icon}`} />
+                  {link.label}
+                </NavLink>
+              ))}
+
+              {/* Languages link in mobile */}
+              <div className="flex items-center gap-2 px-4 py-3 rounded-md text-sm font-medium text-gray-800 hover:bg-gray-100 cursor-pointer">
+                <i className="bi bi-translate" />
+                Languages: English / French<span className="text-xs text-gray-400 uppercase">soon</span>
+              </div>
+
+              <Link
+                to="/donate"
+                className={`${btnPrimary} m-4`}
                 onClick={closeMobile}
               >
-                <i className={`bi ${link.icon}`} />
-                {link.label}
-              </NavLink>
-            ))}
-            <Link
-              to="/donate"
-              className={`${btnPrimary} m-4`}
-              onClick={closeMobile}
-            >
-              <i className="bi bi-heart-fill" /> Donate
-            </Link>
-          </div>
+                <i className="bi bi-heart-fill" /> Donate
+              </Link>
+            </div>
+          </>
         )}
       </nav>
 
