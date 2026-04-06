@@ -28,7 +28,7 @@ export default function About() {
   return (
     <div className="bg-brand-background text-gray-800">
       {/* Intro */}
-      <section className="border-b border-gray-100 bg-gradient-to-b from-white to-page px-6 py-16 md:px-16 md:py-20">
+      <section className="border-b border-gray-100 bg-gradient-to-b from-white to-page px-6 py-16 md:px-16 md:py-24">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-brand-primary">
             Our story
@@ -36,20 +36,20 @@ export default function About() {
           <h1 className="mb-6 text-heading2 font-bold text-brand-secondary md:text-heading1">
             About ForwardToSuccess
           </h1>
-          <p className="text-lg leading-relaxed text-gray-600">
-            We are a passionate team of qualified trainers committed to
-            empowering people through languages, technology, and practical
-            skills that open real opportunities.
+          <p className="text-lg leading-relaxed text-gray-600 md:text-xl">
+            Forward To Success exists to make real-world skills accessible—
+            from language fluency to digital expertise—so anyone committed to
+            growth can unlock new opportunities, careers, and confidence.
           </p>
         </div>
       </section>
 
-      {/* Mission & vision */}
-      <section className="px-6 py-16 md:px-16 md:py-20">
+      {/* Mission & Vision */}
+      <section className="px-6 py-16 md:px-16 md:py-24">
         <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2 md:gap-14">
           <article className="rounded-2xl border border-gray-100 bg-white p-8 shadow-section transition duration-300 hover:shadow-md">
             <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary">
-              <i className="bi bi-bullseye text-lg" aria-hidden />
+              <i className="bi bi-bullseye text-lg" />
             </div>
             <h2 className="mb-3 text-heading3 font-bold text-brand-secondary">
               Mission
@@ -59,10 +59,14 @@ export default function About() {
               programs—so learners can communicate with confidence and compete
               in a connected world.
             </p>
+            <p className="mt-3 text-sm text-gray-500">
+              Focused on impact, not just completion.
+            </p>
           </article>
+
           <article className="rounded-2xl border border-gray-100 bg-white p-8 shadow-section transition duration-300 hover:shadow-md">
             <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-accent/10 text-brand-accent">
-              <i className="bi bi-eye text-lg" aria-hidden />
+              <i className="bi bi-eye text-lg" />
             </div>
             <h2 className="mb-3 text-heading3 font-bold text-brand-secondary">
               Vision
@@ -72,13 +76,17 @@ export default function About() {
               background—can push forward with skills that translate into
               work, study, and everyday life.
             </p>
+            <p className="mt-3 text-sm text-gray-500">
+              Built for long-term transformation.
+            </p>
           </article>
         </div>
       </section>
 
       {/* Who we are + Team */}
-      <section className="bg-page px-6 py-16 md:px-16 md:py-20">
+      <section className="bg-page px-6 py-16 md:px-16 md:py-24">
         <div className="mx-auto grid max-w-6xl items-start gap-14 lg:grid-cols-2">
+          {/* LEFT */}
           <div>
             <h2 className="mb-4 text-heading3 font-bold text-brand-secondary">
               Who we are
@@ -100,6 +108,7 @@ export default function About() {
             </p>
           </div>
 
+          {/* RIGHT - TEAM */}
           <div>
             <h2 className="mb-2 text-heading3 font-bold text-brand-secondary">
               Meet the team
@@ -111,20 +120,23 @@ export default function About() {
             <div className="relative mx-auto min-h-[220px] max-w-md">
               {teamMembers.map((member, index) => (
                 <div
-                  key={member.name}
+                  key={member.name + index}
                   className={`absolute inset-x-0 top-0 transition-all duration-700 ease-in-out ${
                     index === currentIndex
                       ? "z-10 translate-y-0 scale-100 opacity-100"
-                      : "z-0 translate-y-6 scale-[0.97] opacity-0 pointer-events-none"
+                      : "z-0 translate-y-10 scale-95 opacity-0 pointer-events-none"
                   }`}
                 >
-                  <div className="rounded-2xl border border-gray-100 bg-white p-8 text-center shadow-section">
+                  <div className="rounded-2xl border border-gray-100 bg-white p-8 text-center shadow-lg transition duration-500 hover:shadow-xl">
                     <TeamAvatar name={member.name} className="mb-4" />
                     <h3 className="text-xl font-semibold text-brand-secondary">
                       {member.name}
                     </h3>
                     <p className="mt-1 text-small text-gray-600">
                       {member.role}
+                    </p>
+                    <p className="mt-2 text-xs uppercase tracking-wide text-gray-400">
+                      Forward To Success Team
                     </p>
                   </div>
                 </div>
@@ -135,9 +147,6 @@ export default function About() {
               {teamMembers.map((_, i) => (
                 <button
                   key={i}
-                  type="button"
-                  aria-label={`Show team member ${i + 1}`}
-                  aria-current={i === currentIndex}
                   onClick={() => setCurrentIndex(i)}
                   className={`h-2 rounded-full transition-all duration-300 ${
                     i === currentIndex
@@ -152,7 +161,7 @@ export default function About() {
       </section>
 
       {/* Impact */}
-      <section className="px-6 py-16 md:px-16 md:py-20">
+      <section className="px-6 py-16 md:px-16 md:py-24">
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-10 text-center text-heading3 font-bold text-brand-secondary">
             Impact at a glance
@@ -166,12 +175,14 @@ export default function About() {
             ].map((item) => (
               <div
                 key={item.label}
-                className="rounded-2xl border border-gray-100 bg-white p-6 text-center shadow-section transition hover:-translate-y-0.5 hover:shadow-md"
+                className="rounded-2xl border border-gray-100 bg-white p-6 text-center shadow-section transition duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
-                <p className="text-heading3 font-bold text-brand-accent">
+                <p className="text-3xl font-extrabold text-brand-accent md:text-4xl">
                   {item.value}
                 </p>
-                <p className="mt-2 text-small text-gray-600">{item.label}</p>
+                <p className="mt-2 text-small text-gray-600">
+                  {item.label}
+                </p>
               </div>
             ))}
           </div>
@@ -179,7 +190,7 @@ export default function About() {
       </section>
 
       {/* Values */}
-      <section className="border-t border-gray-100 bg-page px-6 py-16 md:px-16 md:py-20">
+      <section className="border-t border-gray-100 bg-page px-6 py-16 md:px-16 md:py-24">
         <h2 className="mb-10 text-center text-heading3 font-bold text-brand-secondary">
           Our core values
         </h2>
@@ -212,14 +223,14 @@ export default function About() {
       </section>
 
       {/* CTA */}
-      <section className="px-6 py-16 text-center md:px-16 md:py-20">
+      <section className="px-6 py-16 text-center md:px-16 md:py-24">
         <div className="mx-auto max-w-2xl rounded-2xl bg-brand-primary px-8 py-12 text-white shadow-section">
           <h2 className="mb-4 text-heading2 font-bold">
             Start your journey today
           </h2>
           <p className="mb-8 text-body text-white/90">
-            Join learners who are building language fluency, digital skills,
-            and creative confidence with us.
+            Take the next step toward fluency, technical skills, and real-world
+            confidence. Start learning with a system designed for results.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/contact" className={btnOnDark}>
