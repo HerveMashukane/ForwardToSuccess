@@ -33,7 +33,7 @@ export default function About() {
           <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-brand-primary">
             Our story
           </p>
-          <h1 className="mb-6 text-heading2 font-bold text-brand-secondary md:text-heading1">
+          <h1 className="mb-6 text-heading3 font-bold text-brand-secondary md:text-heading1">
             About ForwardToSuccess
           </h1>
           <p className="text-lg leading-relaxed text-gray-600 md:text-xl">

@@ -53,7 +53,7 @@ export default function Navbar() {
           {/* LOGO */}
           <Link
             to="/"
-            className="text-3xl md:text-heading3 font-bold text-brand-accent"
+            className="text-xl md:text-heading3 font-bold text-brand-accent"
             onClick={closeMobile}
           >
             ForwardToSuccess
