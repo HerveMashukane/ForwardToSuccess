@@ -4,13 +4,14 @@ export type Testimonial = {
   quote: string;
   name: string;
   role: string;
+  avatar?: string; // future-proof
 };
 
 const testimonials: Testimonial[] = [
   {
     quote:
       "The English program gave me confidence to work with international clients. The trainers are patient and the lessons feel practical from day one.",
-    name: "Dorcas Muhindo.",
+    name: "Dorcas Muhindo",
     role: "Alumni · English graduate",
   },
   {
@@ -33,6 +34,15 @@ const testimonials: Testimonial[] = [
   },
 ];
 
+function getInitials(name: string) {
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
 export default function Testimonials() {
   const [index, setIndex] = useState(0);
   const [fadeKey, setFadeKey] = useState(0);
@@ -48,56 +58,65 @@ export default function Testimonials() {
   const active = testimonials[index];
 
   return (
-    <section
-      className="border-y border-gray-200/80 bg-gradient-to-b from-white to-page px-6 py-20 md:px-16"
-      aria-labelledby="testimonials-heading"
-    >
+    <section className="border-y border-gray-200/80 bg-gradient-to-b from-white to-page px-6 py-16 md:px-16 lg:py-20">
+      
+      {/* HEADER */}
       <div className="mx-auto max-w-3xl text-center">
-        <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-brand-primary">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-brand-primary">
           Voices from our community
         </p>
-        <h2
-          id="testimonials-heading"
-          className="mb-4 text-heading2 font-bold text-brand-secondary"
-        >
+
+        <h2 className="mb-4 text-2xl font-bold text-brand-secondary md:text-3xl lg:text-4xl">
           What learners say
         </h2>
+
         <p className="mb-12 text-gray-600">
           Real stories from students and alumni who pushed forward with us.
         </p>
       </div>
 
+      {/* CARD */}
       <div className="relative mx-auto max-w-2xl">
         <div
           key={fadeKey}
-          className="animate-testimonial-fade rounded-2xl border border-gray-100 bg-white p-8 shadow-section md:p-10"
+          className="transform rounded-2xl border border-gray-100 bg-white p-8 shadow-lg transition duration-500 hover:shadow-xl md:p-10"
         >
+          {/* STARS */}
           <div className="mb-6 flex justify-center gap-1 text-brand-accent">
             {Array.from({ length: 5 }).map((_, i) => (
-              <i key={i} className="bi bi-star-fill text-lg" aria-hidden />
+              <i key={i} className="bi bi-star-fill text-lg" />
             ))}
           </div>
-          <blockquote className="mb-8 text-center text-lg leading-relaxed text-gray-700 md:text-xl">
+
+          {/* QUOTE */}
+          <blockquote className="mb-8 text-center text-base leading-relaxed text-gray-700 md:text-lg lg:text-xl">
             “{active.quote}”
           </blockquote>
-          <footer className="text-center">
-            <p className="font-semibold text-gray-900">{active.name}</p>
-            <p className="mt-1 text-small text-gray-500">{active.role}</p>
-          </footer>
+
+          {/* USER */}
+          <div className="flex flex-col items-center gap-3">
+            
+            {/* AVATAR */}
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary/10 text-sm font-bold text-brand-primary">
+              {getInitials(active.name)}
+            </div>
+
+            <div className="text-center">
+              <p className="font-semibold text-gray-900">
+                {active.name}
+              </p>
+              <p className="text-sm text-gray-500">
+                {active.role}
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div
-          className="mt-8 flex justify-center gap-2"
-          role="tablist"
-          aria-label="Testimonial slides"
-        >
+        {/* DOTS */}
+        <div className="mt-8 flex justify-center gap-2">
           {testimonials.map((_, i) => (
             <button
               key={i}
-              type="button"
-              role="tab"
-              aria-selected={i === index}
-              aria-label={`Show testimonial ${i + 1}`}
               onClick={() => {
                 setIndex(i);
                 setFadeKey((k) => k + 1);
