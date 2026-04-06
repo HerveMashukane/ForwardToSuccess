@@ -12,8 +12,8 @@ const navLinks = [
 ];
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-  `flex items-center gap-2 px-4 py-3 rounded-md text-sm font-medium transition ${
-    isActive ? "bg-red-100 text-red-600" : "text-gray-800 hover:bg-gray-100"
+  `flex items-center gap-2 px-4 py-3 rounded-md text-sm font-semibold transition ${
+    isActive ? "text-brand-accent font-bold" : "text-gray-800 hover:text-brand-accent hover:font-bold"
   }`;
 
 export default function Navbar() {

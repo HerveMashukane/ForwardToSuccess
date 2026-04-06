@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, useCallback, FormEvent } from "react";
+import { useMemo, useRef, useState, useCallback, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { btnPrimary, btnSecondary, focusRing, inputBase } from "../lib/ui";
 
