@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { btnPrimary, btnSecondary } from "../lib/ui";
 
@@ -5,30 +6,43 @@ const courses = [
   {
     title: "English",
     blurb: "Build fluency with conversation-first lessons and real-world tasks.",
+    category: "Languages",
   },
   {
     title: "French",
     blurb: "Structured progression from foundations to confident daily use.",
+    category: "Languages",
   },
   {
     title: "Spanish",
     blurb: "Practical vocabulary and listening skills for travel and work.",
+    category: "Languages",
   },
   {
     title: "Chinese",
     blurb: "Introduction to tones, characters, and everyday expressions.",
+    category: "Languages",
   },
   {
     title: "Make-up",
     blurb: "Professional techniques, hygiene, and portfolio-ready looks.",
+    category: "Professional",
   },
   {
     title: "Computer Science",
     blurb: "Foundations in logic, tools, and problem-solving for tech careers.",
+    category: "Professional",
   },
 ];
 
 export default function Programs() {
+  const [filter, setFilter] = useState<"All" | "Languages" | "Professional">(
+    "All"
+  );
+
+  const filteredCourses =
+    filter === "All" ? courses : courses.filter((c) => c.category === filter);
+
   return (
     <section className="px-6 py-16 md:px-16 md:py-24 bg-brand-background text-gray-800">
       {/* Hero */}
@@ -46,9 +60,26 @@ export default function Programs() {
         </p>
       </div>
 
+      {/* Filter Buttons */}
+      <div className="mb-10 flex flex-wrap justify-center gap-4">
+        {(["All", "Languages", "Professional"] as const).map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setFilter(cat)}
+            className={`rounded-btnRadius px-4 py-2 text-sm font-semibold transition ${
+              filter === cat
+                ? "bg-brand-primary text-white"
+                : "border border-gray-300 text-gray-700 hover:bg-gray-100"
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
       {/* Courses Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {courses.map((course) => (
+        {filteredCourses.map((course) => (
           <article
             key={course.title}
             className="group flex flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-section transition duration-300 hover:-translate-y-1 hover:border-brand-primary/20 hover:shadow-lg"
@@ -59,9 +90,7 @@ export default function Programs() {
             <h2 className="mb-2 text-heading3 font-bold text-brand-secondary">
               {course.title}
             </h2>
-            <p className="mb-6 flex-1 text-body text-gray-600">
-              {course.blurb}
-            </p>
+            <p className="mb-6 flex-1 text-body text-gray-600">{course.blurb}</p>
             <Link
               to="/contact"
               className="inline-flex items-center gap-2 text-sm font-semibold text-brand-primary transition hover:gap-3 hover:text-brand-accent"
