@@ -45,10 +45,10 @@ export default function Footer() {
           <h4 className="mb-4 text-sm font-semibold text-white">Social</h4>
           <ul className="flex flex-wrap gap-6">
             {[
-              { name: "Facebook", href: "https://facebook.com", icon: "bi-facebook text-brand-primary" },
-              { name: "WhatsApp", href: "https://wa.me/243985219157", icon: "bi-whatsapp text-green-500" },
-              { name: "TikTok", href: "https://tiktok.com", icon: "bi-tiktok text-gray-300" },
-              { name: "YouTube", href: "https://youtube.com", icon: "bi-youtube text-brand-accent" },
+              { name: "Facebook", href: "https://www.facebook.com/share/1GK6mznd1v/?mibextid=wwXIfr", icon: "bi-facebook text-brand-primary" },
+              { name: "WhatsApp", href: "https://wa.me/+243901284995", icon: "bi-whatsapp text-green-500" },
+              { name: "TikTok", href: "https://www.tiktok.com/@forward.tosuccess5?_r=1&_t=ZS-95JeKGow8q8", icon: "bi-tiktok text-gray-300" },
+              { name: "YouTube", href: "https://youtube.com/@ftsforwardtosuccess?si=np-QtgMgicW6CQQW", icon: "bi-youtube text-brand-accent" },
             ].map((social) => (
               <li key={social.name}>
                 <a
@@ -74,15 +74,15 @@ export default function Footer() {
               href="mailto:forwardtosuccess@gmail.com"
               className="transition duration-300 hover:text-white hover:underline"
             >
-              forwardtosuccess@gmail.com
+              forwardtosuccessfts@gmail.com
             </a>
           </p>
           <p className="mt-2 text-small">
             <a
-              href="tel:+243985219157"
+              href="tel:+243901284995"
               className="transition duration-300 hover:text-white hover:underline"
             >
-              +243 985 219 157
+              +243 901 284 995
             </a>
           </p>
         </div>
