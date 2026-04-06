@@ -1,5 +1,4 @@
-import { useMemo, useState } from "react";
-import type { FormEvent } from "react";
+import { useMemo, useRef, useState, useCallback, FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { btnPrimary, btnSecondary, focusRing, inputBase } from "../lib/ui";
 
@@ -19,6 +18,10 @@ function validateEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 }
 
+type ToastState =
+  | { phase: "in"; message: string; variant: "success" | "error" }
+  | { phase: "out"; message: string; variant: "success" | "error" };
+
 export default function Donate() {
   const [step, setStep] = useState<Step>(1);
   const [amount, setAmount] = useState<string>("25");
@@ -26,6 +29,8 @@ export default function Donate() {
   const [details, setDetails] = useState<Details>(initialDetails);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [toast, setToast] = useState<ToastState | null>(null);
+  const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const numericAmount = useMemo(() => {
     if (amount === "custom") {
@@ -44,9 +49,25 @@ export default function Donate() {
     details.fullName.trim().length < 2
       ? "Please enter your full name."
       : "";
+
   const emailError = !validateEmail(details.email)
     ? "Please enter a valid email."
     : "";
+
+  const showToast = useCallback((message: string, variant: "success" | "error") => {
+    if (hideTimeoutRef.current) {
+      clearTimeout(hideTimeoutRef.current);
+      hideTimeoutRef.current = null;
+    }
+    setToast({ phase: "in", message, variant });
+    hideTimeoutRef.current = setTimeout(() => {
+      setToast((t) => (t && t.phase === "in" ? { ...t, phase: "out" } : t));
+    }, 2600);
+  }, []);
+
+  const handleToastAnimationEnd = () => {
+    setToast((t) => (t?.phase === "out" ? null : t));
+  };
 
   const markTouched = (field: string) =>
     setTouched((t) => ({ ...t, [field]: true }));
@@ -55,19 +76,29 @@ export default function Donate() {
   const canProceedStep2 = !nameError && !emailError;
 
   const goNext = () => {
-    if (step === 1 && canProceedStep1) setStep(2);
-    if (step === 2 && canProceedStep2) setStep(3);
+    if (step === 1) {
+      markTouched("amount");
+      if (amount === "custom") markTouched("custom");
+
+      if (canProceedStep1) setStep(2);
+      else showToast(amountError, "error");
+    } else if (step === 2) {
+      markTouched("fullName");
+      markTouched("email");
+
+      if (canProceedStep2) setStep(3);
+      else if (nameError) showToast(nameError, "error");
+      else if (emailError) showToast(emailError, "error");
+    }
   };
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!canProceedStep1 || !canProceedStep2) {
-      setTouched({
-        amount: true,
-        fullName: true,
-        email: true,
-        custom: amount === "custom",
-      });
+      markTouched("amount");
+      markTouched("fullName");
+      markTouched("email");
+      if (amount === "custom") markTouched("custom");
       return;
     }
     setSubmitted(true);
@@ -82,6 +113,8 @@ export default function Donate() {
     setSubmitted(false);
   };
 
+  const toastStyles = toast?.variant === "error" ? "bg-red-600" : "bg-emerald-600";
+
   if (submitted) {
     return (
       <section className="px-6 py-20 md:px-16">
@@ -89,27 +122,22 @@ export default function Donate() {
           <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
             <i className="bi bi-check-lg text-3xl" aria-hidden />
           </div>
-          <h1 className="mb-3 text-heading2 font-bold text-gray-900">
-            Thank you
-          </h1>
+          <h1 className="mb-3 text-heading2 font-bold text-gray-900">Thank you</h1>
           <p className="mb-2 text-gray-600">
             Your pledge of{" "}
             <span className="font-semibold text-gray-900">
               ${numericAmount.toFixed(2)}
             </span>{" "}
-            is recorded. In production, this step would connect to a secure
-            payment provider.
+            is recorded. In production, this would connect to a secure payment provider.
           </p>
           <p className="mb-8 text-small text-gray-500">
-            We sent a confirmation summary to {details.email.trim()}.
+            Confirmation sent to {details.email.trim()}.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <button type="button" className={btnPrimary} onClick={resetFlow}>
               Make another donation
             </button>
-            <Link to="/" className={btnSecondary}>
-              Back home
-            </Link>
+            <Link to="/" className={btnSecondary}>Back home</Link>
           </div>
         </div>
       </section>
@@ -117,21 +145,32 @@ export default function Donate() {
   }
 
   return (
-    <section className="px-6 py-16 md:px-16 md:py-20">
+    <section className="px-6 py-16 md:px-16 md:py-20 relative">
+      {toast && (
+        <div
+          role="status"
+          aria-live="polite"
+          onAnimationEnd={handleToastAnimationEnd}
+          className={`fixed right-6 top-6 z-[70] max-w-sm rounded-inputRadius px-5 py-3 text-sm font-medium text-white shadow-lg ${toastStyles} ${
+            toast.phase === "in" ? "animate-toastIn" : "animate-toastOut"
+          }`}
+        >
+          {toast.message}
+        </div>
+      )}
+
       <div className="mx-auto max-w-xl">
         <div className="mb-10 text-center">
           <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-brand-primary">
             Support our mission
           </p>
-          <h1 className="mb-3 text-heading2 font-bold text-gray-900">
-            Donate
-          </h1>
+          <h1 className="mb-3 text-heading2 font-bold text-gray-900">Donate</h1>
           <p className="text-gray-600">
-            Help keep language programs accessible. Choose an amount, share
-            your details, and confirm — simple and transparent.
+            Help keep language programs accessible. Choose an amount, share your details, and confirm.
           </p>
         </div>
 
+        {/* Step Indicators */}
         <ol className="mb-10 flex items-center justify-center gap-2 text-small md:gap-4">
           {[
             { n: 1, label: "Amount" },
@@ -148,29 +187,20 @@ export default function Donate() {
               >
                 {s.n}
               </span>
-              <span
-                className={
-                  step >= s.n ? "font-medium text-gray-900" : "text-gray-500"
-                }
-              >
+              <span className={step >= s.n ? "font-medium text-gray-900" : "text-gray-500"}>
                 {s.label}
               </span>
-              {s.n < 3 && (
-                <span className="hidden text-gray-300 sm:inline">—</span>
-              )}
+              {s.n < 3 && <span className="hidden text-gray-300 sm:inline">—</span>}
             </li>
           ))}
         </ol>
 
-        <form
-          onSubmit={onSubmit}
-          className="rounded-2xl border border-gray-100 bg-white p-8 shadow-section"
-        >
+        {/* Form */}
+        <form onSubmit={onSubmit} className="rounded-2xl border border-gray-100 bg-white p-8 shadow-section">
+          {/* Step 1 */}
           {step === 1 && (
             <div className="space-y-6">
-              <h2 className="text-heading3 font-semibold text-brand-secondary">
-                Choose an amount
-              </h2>
+              <h2 className="text-heading3 font-semibold text-brand-secondary">Choose an amount</h2>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {PRESET_AMOUNTS.map((v) => (
                   <button
@@ -191,14 +221,11 @@ export default function Donate() {
                 ))}
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
-                  Custom amount (USD)
-                </label>
+                <label className="mb-2 block text-sm font-medium text-gray-700">Custom amount (USD)</label>
                 <input
                   type="number"
                   min={1}
                   step="0.01"
-                  inputMode="decimal"
                   placeholder="e.g. 75"
                   value={customAmount}
                   onChange={(e) => {
@@ -217,41 +244,29 @@ export default function Donate() {
                   <p className="mt-1 text-xs text-red-600">{amountError}</p>
                 )}
               </div>
-              <button
-                type="button"
-                className={`${btnPrimary} w-full`}
-                onClick={() => {
-                  markTouched("amount");
-                  if (amount === "custom") markTouched("custom");
-                  goNext();
-                }}
-              >
+              <button type="button" className={`${btnPrimary} w-full`} onClick={goNext}>
                 Continue
               </button>
             </div>
           )}
 
+          {/* Step 2 */}
           {step === 2 && (
             <div className="space-y-6">
-              <h2 className="text-heading3 font-semibold text-brand-secondary">
-                Your details
-              </h2>
+              <h2 className="text-heading3 font-semibold text-brand-secondary">Your details</h2>
               <div className="space-y-4">
+                {/* Name */}
                 <div className="relative">
                   <input
                     id="donate-name"
                     name="fullName"
                     value={details.fullName}
-                    onChange={(e) =>
-                      setDetails((d) => ({ ...d, fullName: e.target.value }))
-                    }
+                    onChange={(e) => setDetails((d) => ({ ...d, fullName: e.target.value }))}
                     onBlur={() => markTouched("fullName")}
                     placeholder=" "
                     autoComplete="name"
                     className={`${inputBase} border-gray-300 focus:ring-brand-primary ${
-                      touched.fullName && nameError
-                        ? "border-red-400 focus:ring-red-400"
-                        : ""
+                      touched.fullName && nameError ? "border-red-400 focus:ring-red-400" : ""
                     }`}
                   />
                   <label
@@ -264,22 +279,19 @@ export default function Donate() {
                     <p className="mt-1 text-xs text-red-600">{nameError}</p>
                   )}
                 </div>
+                {/* Email */}
                 <div className="relative">
                   <input
                     id="donate-email"
                     name="email"
                     type="email"
                     value={details.email}
-                    onChange={(e) =>
-                      setDetails((d) => ({ ...d, email: e.target.value }))
-                    }
+                    onChange={(e) => setDetails((d) => ({ ...d, email: e.target.value }))}
                     onBlur={() => markTouched("email")}
                     placeholder=" "
                     autoComplete="email"
                     className={`${inputBase} border-gray-300 focus:ring-brand-primary ${
-                      touched.email && emailError
-                        ? "border-red-400 focus:ring-red-400"
-                        : ""
+                      touched.email && emailError ? "border-red-400 focus:ring-red-400" : ""
                     }`}
                   />
                   <label
@@ -292,11 +304,9 @@ export default function Donate() {
                     <p className="mt-1 text-xs text-red-600">{emailError}</p>
                   )}
                 </div>
+                {/* Note */}
                 <div>
-                  <label
-                    htmlFor="donate-note"
-                    className="mb-2 block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="donate-note" className="mb-2 block text-sm font-medium text-gray-700">
                     Note (optional)
                   </label>
                   <textarea
@@ -304,60 +314,39 @@ export default function Donate() {
                     name="note"
                     rows={3}
                     value={details.note}
-                    onChange={(e) =>
-                      setDetails((d) => ({ ...d, note: e.target.value }))
-                    }
+                    onChange={(e) => setDetails((d) => ({ ...d, note: e.target.value }))}
                     className="w-full rounded-inputRadius border border-gray-300 px-4 py-3 text-gray-900 transition focus:outline-none focus:ring-2 focus:ring-brand-primary"
                     placeholder="Dedicated to language scholarships, in honor of…"
                   />
                 </div>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row-reverse">
-                <button
-                  type="button"
-                  className={`${btnPrimary} w-full sm:flex-1`}
-                  onClick={() => {
-                    markTouched("fullName");
-                    markTouched("email");
-                    goNext();
-                  }}
-                >
+                <button type="button" className={`${btnPrimary} w-full sm:flex-1`} onClick={goNext}>
                   Review
                 </button>
-                <button
-                  type="button"
-                  className={`${btnSecondary} w-full sm:flex-1`}
-                  onClick={() => setStep(1)}
-                >
+                <button type="button" className={`${btnSecondary} w-full sm:flex-1`} onClick={() => setStep(1)}>
                   Back
                 </button>
               </div>
             </div>
           )}
 
+          {/* Step 3 */}
           {step === 3 && (
             <div className="space-y-6">
-              <h2 className="text-heading3 font-semibold text-brand-secondary">
-                Confirm
-              </h2>
+              <h2 className="text-heading3 font-semibold text-brand-secondary">Confirm</h2>
               <dl className="space-y-3 rounded-inputRadius bg-page p-5 text-sm">
                 <div className="flex justify-between gap-4">
                   <dt className="text-gray-500">Amount</dt>
-                  <dd className="font-semibold text-gray-900">
-                    ${numericAmount.toFixed(2)} USD
-                  </dd>
+                  <dd className="font-semibold text-gray-900">${numericAmount.toFixed(2)} USD</dd>
                 </div>
                 <div className="flex justify-between gap-4">
                   <dt className="text-gray-500">Name</dt>
-                  <dd className="text-right font-medium text-gray-900">
-                    {details.fullName.trim()}
-                  </dd>
+                  <dd className="text-right font-medium text-gray-900">{details.fullName.trim()}</dd>
                 </div>
                 <div className="flex justify-between gap-4">
                   <dt className="text-gray-500">Email</dt>
-                  <dd className="break-all text-right font-medium text-gray-900">
-                    {details.email.trim()}
-                  </dd>
+                  <dd className="break-all text-right font-medium text-gray-900">{details.email.trim()}</dd>
                 </div>
                 {details.note.trim() && (
                   <div>
@@ -367,20 +356,11 @@ export default function Donate() {
                 )}
               </dl>
               <p className="text-small text-gray-500">
-                By confirming, you agree to our use of your details only to
-                process this donation and communicate with you about it.
+                By confirming, you agree to our use of your details only to process this donation and communicate with you about it.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row-reverse">
-                <button type="submit" className={`${btnPrimary} w-full sm:flex-1`}>
-                  Confirm donation
-                </button>
-                <button
-                  type="button"
-                  className={`${btnSecondary} w-full sm:flex-1`}
-                  onClick={() => setStep(2)}
-                >
-                  Edit details
-                </button>
+                <button type="submit" className={`${btnPrimary} w-full sm:flex-1`}>Confirm donation</button>
+                <button type="button" className={`${btnSecondary} w-full sm:flex-1`} onClick={() => setStep(2)}>Edit details</button>
               </div>
             </div>
           )}

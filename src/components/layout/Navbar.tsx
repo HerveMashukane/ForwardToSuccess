@@ -1,22 +1,29 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { btnPrimary, focusRing } from "../../lib/ui";
+import WhatsAppFloat from "../ui/WhatsAppFloat";
+import ScrollToTop from "../ui/ScrollToTop";
+
+const navLinks = [
+  { to: "/", label: "Home", icon: "bi-house-fill", end: true },
+  { to: "/about", label: "About", icon: "bi-info-circle-fill" },
+  { to: "/programs", label: "Programs", icon: "bi-journal-bookmark-fill" },
+  { to: "/contact", label: "Contact", icon: "bi-envelope-fill" },
+];
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-  `flex items-center gap-2 rounded-md px-3 py-2 text-sm transition ${
-    isActive
-      ? "text-brand-accent"
-      : "text-gray-700 hover:text-brand-accent"
+  `flex items-center gap-2 px-4 py-3 rounded-md text-sm font-medium transition ${
+    isActive ? "bg-red-100 text-red-600" : "text-gray-800 hover:bg-gray-100"
   }`;
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
-
   const langRef = useRef<HTMLDivElement>(null);
 
   const closeMobile = () => setIsOpen(false);
 
+  // Close language dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (langRef.current && !langRef.current.contains(e.target as Node)) {
@@ -27,158 +34,133 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // check screen size on resize and clode
+  // Close mobile menu on desktop resize
   useEffect(() => {
-  const mediaQuery = window.matchMedia("(min-width: 768px)");
-
-  const handleResize = (e: MediaQueryListEvent | MediaQueryList) => {
-    if (e.matches) {
-      setIsOpen(false); // close menu when switching to desktop
-    }
-  };
-
-  // Run once on mount
-  handleResize(mediaQuery);
-
-  // Listen for changes
-  mediaQuery.addEventListener("change", handleResize);
-
-  return () => {
-    mediaQuery.removeEventListener("change", handleResize);
-  };
-}, []);
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const handleResize = (e: MediaQueryListEvent | MediaQueryList) => {
+      if (e.matches) setIsOpen(false);
+    };
+    handleResize(mediaQuery);
+    mediaQuery.addEventListener("change", handleResize);
+    return () => mediaQuery.removeEventListener("change", handleResize);
+  }, []);
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-gray-200/80 bg-brand-background/90 backdrop-blur-md">
-      
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        
-        {/* LOGO */}
-        <Link
-          to="/"
-          className="text-3xl md:text-heading3 font-bold text-brand-accent"
-          onClick={closeMobile}
-        >
-          ForwardToSuccess
-        </Link>
+    <>
+      {/* NAVBAR */}
+      <nav className="sticky top-0 z-50 border-b border-gray-200/80 bg-brand-background/90 backdrop-blur-md">
+        <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
+          {/* LOGO */}
+          <Link
+            to="/"
+            className="text-3xl md:text-heading3 font-bold text-brand-accent"
+            onClick={closeMobile}
+          >
+            ForwardToSuccess
+          </Link>
 
-        {/* DESKTOP NAV */}
-        <div className="hidden items-center gap-10 md:flex">
-          
-          <div className="flex items-center gap-6 font-medium">
-            <NavLink to="/" end className={navLinkClass}>
-              <i className="bi bi-house-fill" />
-              Home
-            </NavLink>
-            <NavLink to="/about" className={navLinkClass}>
-              <i className="bi bi-info-circle-fill" />
-              About
-            </NavLink>
-            <NavLink to="/programs" className={navLinkClass}>
-              <i className="bi bi-journal-bookmark-fill" />
-              Programs
-            </NavLink>
-            <NavLink to="/contact" className={navLinkClass}>
-              <i className="bi bi-envelope-fill" />
-              Contact
-            </NavLink>
+          {/* DESKTOP NAV */}
+          <div className="hidden md:flex items-center gap-10">
+            <div className="flex items-center gap-6 font-medium">
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  end={link.end}
+                  className={navLinkClass}
+                >
+                  <i className={`bi ${link.icon}`} />
+                  {link.label}
+                </NavLink>
+              ))}
 
-            {/* LANGUAGE */}
-            <div className="relative" ref={langRef}>
-              <button
-                onClick={() => setLangOpen(!langOpen)}
-                className={`flex items-center gap-2 ${focusRing} rounded-md px-2 py-1 text-gray-700 hover:text-brand-accent`}
-              >
-                <i className="bi bi-translate" />
-                Languages
-                <i className={`bi bi-chevron-down text-xs ${langOpen ? "rotate-180" : ""}`} />
-              </button>
+              {/* LANGUAGE */}
+              <div className="relative" ref={langRef}>
+                <button
+                  onClick={() => setLangOpen(!langOpen)}
+                  className={`flex items-center gap-2 ${focusRing} rounded-md px-2 py-1 text-gray-700 hover:text-brand-accent`}
+                  aria-haspopup="true"
+                  aria-expanded={langOpen}
+                >
+                  <i className="bi bi-translate" />
+                  Languages
+                  <i
+                    className={`bi bi-chevron-down text-xs transition-transform ${
+                      langOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
 
-              {langOpen && (
-                <div className="absolute top-10 left-0 w-44 rounded-lg border bg-white shadow-lg">
-                  <div className="p-3 text-xs text-gray-400 uppercase">
-                    Coming soon
-                  </div>
-                  <div className="px-3 pb-3 text-sm text-gray-600">
-                    English / French
-                  </div>
-                </div>
-              )}
+                {langOpen && (
+                  <>
+                    {/* Overlay */}
+                    <div
+                      className="fixed inset-0 bg-black/30 z-40 transition-opacity"
+                      onClick={() => setLangOpen(false)}
+                    />
+
+                    {/* Dropdown */}
+                    <div className="absolute top-10 left-0 w-44 rounded-lg border bg-white shadow-lg z-50">
+                      <div className="p-3 text-xs text-gray-400 uppercase">
+                        Coming soon
+                      </div>
+                      <div className="px-3 pb-3 text-sm text-gray-600">
+                        English / French
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
+
+            <Link to="/donate" className={`${btnPrimary}`}>
+              <i className="bi bi-heart-fill" /> Donate
+            </Link>
           </div>
 
-          <Link to="/donate" className={`${btnPrimary}`}>
-            <i className="bi bi-heart-fill" />
-            Donate
-          </Link>
-        </div>
-
-        {/* MOBILE TOGGLE BUTTON */}
-        <button
-          className={`md:hidden p-2 rounded-md bg-gray-100 hover:bg-gray-200 transition ${focusRing}`}
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <i className={`bi ${isOpen ? "bi-x-lg" : "bi-list"} text-2xl`} />
-        </button>
-      </div>
-
-      {/* OVERLAY */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden"
-          onClick={closeMobile}
-        />
-      )}
-
-      {/* MOBILE MENU */}
-      <div
-        className={`fixed top-0 right-0 z-50 h-full w-72 bg-white shadow-xl transform transition-transform duration-300 md:hidden ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        {/* HEADER (IMPORTANT ADDITION) */}
-        <div className="flex items-center justify-between border-b px-6 py-4">
-          <span className="font-semibold text-brand-accent">
-            Menu
-          </span>
-
+          {/* MOBILE TOGGLE */}
           <button
-            onClick={closeMobile}
-            className="rounded-md p-2 hover:bg-gray-100 transition"
+            className={`md:hidden p-2 rounded-md bg-gray-100 hover:bg-gray-200 transition ${focusRing}`}
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
+            aria-expanded={isOpen}
           >
-            <i className="bi bi-x-lg text-xl transition-transform duration-300 ease-in-out hover:rotate-90 hover:scale-110" />
+            <i className={`bi ${isOpen ? "bi-x-lg" : "bi-list"} text-2xl`} />
           </button>
         </div>
 
-        {/* LINKS */}
-        <div className="bg-white flex flex-col gap-3 p-6">
-          <NavLink to="/" end className={navLinkClass} onClick={closeMobile}>
-            <i className="bi bi-house-fill" />
-            Home
-          </NavLink>
-          <NavLink to="/about" className={navLinkClass} onClick={closeMobile}>
-            <i className="bi bi-info-circle-fill" />
-            About
-          </NavLink>
-          <NavLink to="/programs" className={navLinkClass} onClick={closeMobile}>
-            <i className="bi bi-journal-bookmark-fill" />
-            Programs
-          </NavLink>
-          <NavLink to="/contact" className={navLinkClass} onClick={closeMobile}>
-            <i className="bi bi-envelope-fill" />
-            Contact
-          </NavLink>
+        {/* MOBILE DROPDOWN */}
+        {isOpen && (
+          <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg rounded-b-lg animate-toastIn z-50">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                end={link.end}
+                className={navLinkClass}
+                onClick={closeMobile}
+              >
+                <i className={`bi ${link.icon}`} />
+                {link.label}
+              </NavLink>
+            ))}
+            <Link
+              to="/donate"
+              className={`${btnPrimary} m-4`}
+              onClick={closeMobile}
+            >
+              <i className="bi bi-heart-fill" /> Donate
+            </Link>
+          </div>
+        )}
+      </nav>
 
-          <Link
-            to="/donate"
-            className={`${btnPrimary} mt-4`}
-            onClick={closeMobile}
-          >
-            <i className="bi bi-heart-fill" />
-            Donate
-          </Link>
-        </div>
+      {/* FLOAT BUTTONS */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <WhatsAppFloat />
       </div>
-    </nav>
+
+      <ScrollToTop />
+    </>
   );
 }
