@@ -3,6 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import { btnPrimary, focusRing } from "../../lib/ui";
 import WhatsAppFloat from "../ui/WhatsAppFloat";
 import ScrollToTop from "../ui/ScrollToTop";
+import logo from "../../assets/images/logo.png";
 
 const navLinks = [
   { to: "/", label: "Home", icon: "bi-house-fill", end: true },
@@ -51,13 +52,22 @@ export default function Navbar() {
       <nav className="sticky top-0 z-50 border-b border-gray-200/80 bg-brand-background/90 backdrop-blur-md">
         <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
           {/* LOGO */}
-          <Link
-            to="/"
-            className="text-xl md:text-heading3 font-bold text-brand-accent"
-            onClick={closeMobile}
-          >
-            ForwardToSuccess
-          </Link>
+          <div className="flex items-center gap-3 hover:scale-105 transition-transform duration-300">
+            <Link
+              to="/"
+              className="flex items-center gap-3"
+              onClick={closeMobile}
+            >
+              <img
+                src={logo}
+                alt="ForwardToSuccess Logo"
+                className="h-10 w-auto object-contain transition-transform duration-300"
+              />
+              <span className="text-xl font-bold text-brand-accent">
+                ForwardToSuccess
+              </span>
+            </Link>
+          </div>
 
           {/* DESKTOP NAV */}
           <div className="hidden md:flex items-center gap-10">
