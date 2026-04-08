@@ -8,7 +8,7 @@ import logo from "../../assets/images/logo.png";
 const navLinks = [
   { to: "/", label: "Home", icon: "bi-house-fill", end: true },
   { to: "/about", label: "About", icon: "bi-info-circle-fill" },
-  { to: "/programs", label: "Programs", icon: "bi-journal-bookmark-fill" },
+  { to: "/courses", label: "Courses", icon: "bi-journal-bookmark-fill" },
   { to: "/contact", label: "Contact", icon: "bi-envelope-fill" },
 ];
 

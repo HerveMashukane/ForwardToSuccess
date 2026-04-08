@@ -35,7 +35,7 @@ const courses = [
   },
 ];
 
-export default function Programs() {
+export default function Courses() {
   const [filter, setFilter] = useState<"All" | "Languages" | "Professional">(
     "All"
   );
@@ -51,10 +51,10 @@ export default function Programs() {
           What we offer
         </p>
         <h1 className="mb-4 text-heading2 font-bold text-brand-secondary md:text-heading1">
-          Our programs
+          Our Courses
         </h1>
         <p className="mx-auto max-w-2xl text-gray-600 md:text-lg leading-relaxed">
-          Choose a track that matches your goals. Every program pairs expert
+          Choose a track that matches your goals. Every course pairs expert
           guidance with hands-on practice designed to make learning practical
           and achievable.
         </p>

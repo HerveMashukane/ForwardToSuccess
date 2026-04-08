@@ -1,4 +1,3 @@
-// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
@@ -31,12 +30,6 @@ export default {
         glow: "0 0 30px rgba(29,78,216,0.3)",
         section: "0 4px 24px rgba(15, 23, 42, 0.06)",
       },
-      spacing: {
-        btnY: "0.625rem",
-        btnX: "1.25rem",
-        inputY: "0.5rem",
-        inputX: "0.75rem",
-      },
       keyframes: {
         toastIn: {
           "0%": { opacity: "0", transform: "translateY(-12px) scale(0.98)" },
@@ -50,31 +43,30 @@ export default {
           "0%, 100%": { boxShadow: "0 0 30px rgba(29,78,216,0.3)" },
           "50%": { boxShadow: "0 0 60px rgba(29,78,216,0.6)" },
         },
-        /** Bottom decorative oval: drifts upward at midpoint (opposes top oval). */
         heroOvalUp: {
-          "0%, 100%": {
-            transform: "translateY(14px)",
-            opacity: "0.82",
-          },
-          "50%": {
-            transform: "translateY(-14px)",
-            opacity: "0.92",
-          },
+          "0%,100%": { transform: "translateY(14px)", opacity: "0.82" },
+          "50%": { transform: "translateY(-14px)", opacity: "0.92" },
         },
-        /** Top decorative oval: drifts downward at midpoint (opposes bottom oval). */
         heroOvalDown: {
-          "0%, 100%": {
-            transform: "translateY(-14px)",
-            opacity: "0.92",
-          },
-          "50%": {
-            transform: "translateY(14px)",
-            opacity: "0.82",
-          },
+          "0%,100%": { transform: "translateY(-14px)", opacity: "0.92" },
+          "50%": { transform: "translateY(14px)", opacity: "0.82" },
         },
         testimonialIn: {
           "0%": { opacity: "0", transform: "translateX(12px)" },
           "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        fadeUp: {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        floatDiagonal: {
+          "0%": { transform: "translate(0,0) rotate(0deg)" },
+          "50%": { transform: "translate(10px,-10px) rotate(15deg)" },
+          "100%": { transform: "translate(0,0) rotate(0deg)" },
+        },
+        bounceSlow: {
+          "0%,100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-8px)" },
         },
       },
       animation: {
@@ -84,6 +76,9 @@ export default {
         "hero-oval-up": "heroOvalUp 9s ease-in-out infinite",
         "hero-oval-down": "heroOvalDown 9s ease-in-out infinite",
         "testimonial-fade": "testimonialIn 0.55s ease-out forwards",
+        "fade-up": "fadeUp 0.8s ease-out forwards",
+        "float-diagonal": "floatDiagonal 6s ease-in-out infinite",
+        "bounce-slow": "bounceSlow 6s ease-in-out infinite",
       },
     },
   },
