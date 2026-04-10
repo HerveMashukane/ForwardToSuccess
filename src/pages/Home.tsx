@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import heroBanner from "../assets/images/banner.jpg";
 import Testimonials from "../components/home/Testimonials";
-import { btnPrimary, btnSecondary } from "../lib/ui";
 
 const HERO_PHRASES = [
   { text: "Train • Transform • Inspire", color: "text-brand-accent" },
@@ -68,10 +67,15 @@ export default function Home() {
 
             {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-4 mt-6 animate-fade-up animate-delay-400">
-              <Link to="/contact" className={`${btnPrimary} sm:w-auto w-full justify-center`}>
+              <Link to="/contact" className="inline-flex items-center justify-center rounded-btnRadius 
+                        bg-brand-accent px-4 py-3 font-semibold text-white 
+                        transition duration-200 hover:bg-brand-accent-hover shadow-btnShadow">
                 Start Learning
               </Link>
-              <Link to="/courses" className={`${btnSecondary} sm:w-auto w-full justify-center`}>
+              <Link to="/courses" className="inline-flex items-center justify-center gap-2 
+                        rounded-btnRadius border border-gray-300
+                        px-4 py-3 font-semibold bg-white/10
+                        transition duration-200 hover:bg-gray-300">
                 Explore Courses
               </Link>
             </div>

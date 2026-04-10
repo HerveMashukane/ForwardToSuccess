@@ -225,23 +225,40 @@ export default function About() {
       {/* CTA */}
       <section className="px-6 py-16 text-center md:px-16 md:py-24">
         <div className="mx-auto max-w-2xl rounded-2xl bg-brand-primary px-8 py-12 text-white shadow-section">
+          
           <h2 className="mb-4 text-heading2 font-bold">
             Start your journey today
           </h2>
+
           <p className="mb-8 text-body text-white/90">
             Take the next step toward fluency, technical skills, and real-world
             confidence. Start learning with a system designed for results.
           </p>
+
+          {/* Buttons container (NO background here) */}
           <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/contact" className={btnOnDark}>
+            
+            {/* Get in touch (brand-accent) */}
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center rounded-btnRadius 
+                        bg-brand-accent px-4 py-3 font-semibold text-white 
+                        transition duration-200 hover:bg-brand-accent-hover shadow-btnShadow"
+            >
               Get in touch
             </Link>
+
+            {/* View programs (transparent) */}
             <Link
               to="/programs"
-              className="inline-flex items-center justify-center gap-2 rounded-btnRadius border border-white/40 px-btnX py-btnY font-semibold text-white transition duration-200 hover:bg-white/10"
+              className="inline-flex items-center justify-center gap-2 
+                        rounded-btnRadius border border-white/40 
+                        px-4 py-3 font-semibold text-white 
+                        transition duration-200 hover:bg-white/10"
             >
               View programs
             </Link>
+
           </div>
         </div>
       </section>

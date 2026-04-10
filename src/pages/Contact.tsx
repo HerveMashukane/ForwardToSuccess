@@ -155,7 +155,9 @@ const Contact = () => {
             {touched.message && errors.message && <p className="mt-1 text-xs text-red-600">{errors.message}</p>}
           </div>
 
-          <button type="submit" disabled={loading} className={btnPrimary}>
+          <button type="submit" disabled={loading} className="w-full inline-flex items-center justify-center rounded-btnRadius 
+                        bg-brand-accent px-4 py-3 font-semibold text-white 
+                        transition duration-200 hover:bg-brand-accent-hover shadow-btnShadow">
             {loading ? (
               <>
                 <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" aria-hidden />

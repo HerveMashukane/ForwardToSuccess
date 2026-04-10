@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
-import { btnPrimary, focusRing } from "../../lib/ui";
+import { focusRing } from "../../lib/ui";
 import WhatsAppFloat from "../ui/WhatsAppFloat";
 import ScrollToTop from "../ui/ScrollToTop";
 import logo from "../../assets/images/logo.png";
@@ -114,7 +114,7 @@ export default function Navbar() {
               </div>
             </div>
 
-            <Link to="/donate" className={`${btnPrimary}`}>
+            <Link to="/donate" className="bg-brand-accent text-white flex items-center justify-center gap-2 mx-4 my-3 rounded-btnRadius px-4 py-3 text-sm font-semibold transition hover:bg-brand-accent-hover shadow-btnShadow">
               <i className="bi bi-heart-fill" /> Donate
             </Link>
           </div>
@@ -161,7 +161,7 @@ export default function Navbar() {
 
               <Link
                 to="/donate"
-                className={`${btnPrimary} m-4`}
+                className="bg-brand-accent text-white flex items-center justify-center gap-2 mx-4 my-3 rounded-btnRadius px-4 py-3 text-sm font-semibold transition hover:bg-brand-accent-hover shadow-btnShadow"
                 onClick={closeMobile}
               >
                 <i className="bi bi-heart-fill" /> Donate
