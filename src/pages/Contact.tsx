@@ -1,13 +1,29 @@
 import { memo, useCallback, useRef, useState } from "react";
-import { inputBase, btnPrimary } from "../lib/ui";
+import { inputBase } from "../lib/ui";
 
 const RATE_LIMIT_MS = 10_000;
 
 const faqs = [
-  { question: "How do I enroll in a course?", answer: "Use Start Learning on the home page or contact us — we will guide you through registration." },
-  { question: "Are courses free?", answer: "Language courses are free. Some specialized programs require a small fee." },
-  { question: "Do I receive a certificate?", answer: "Yes, certificates are issued upon successful completion." },
-  { question: "Is support available?", answer: "Our team is available to assist you throughout your learning journey." },
+  { 
+    question: "How do I enroll in a course?", 
+    answer: "You can enroll by clicking “Start Learning” on the home page or by contacting our team for step-by-step guidance through the registration process." 
+  },
+  { 
+    question: "Are courses free?", 
+    answer: "Our language courses are offered free of charge. Some specialized programs may require a small fee depending on the content and level." 
+  },
+  { 
+    question: "Do I receive a certificate?", 
+    answer: "Yes, a certificate is awarded upon successful completion of your program to recognize your achievement." 
+  },
+  { 
+    question: "Is support available?", 
+    answer: "Yes, our support team is available to assist you at every stage of your learning journey." 
+  },
+  { 
+    question: "Can I learn at my own pace?", 
+    answer: "Yes, our programs are designed to be flexible, allowing you to learn at your own pace while following a structured path for the best results." 
+  },
 ];
 
 type ToastState = { phase: "in" | "out"; message: string; variant: "success" | "error" } | null;
