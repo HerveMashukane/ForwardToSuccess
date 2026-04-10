@@ -13,8 +13,8 @@ type TeamMember = {
 
 const teamMembers: TeamMember[] = [
   { name: "Hervé Mashukane", role: "CEO & Founder", avatar: herve },
-  { name: "Manasse Mubayi", role: "CTO & Co-Founder", avatar: manasse },
-  { name: "Patricia Nkomo", role: "Training Officer", avatar: patricia },
+  { name: "Manasse Aksanti", role: "CTO & Co-Founder", avatar: manasse },
+  { name: "Patricia Masiri", role: "Training Officer", avatar: patricia },
 ];
 
 export default function About() {
@@ -288,14 +288,14 @@ export default function About() {
           <div className="flex justify-center gap-4">
             <Link
               to="/contact"
-              className="bg-brand-accent px-4 py-3 rounded text-white"
+              className="bg-brand-accent px-4 py-3 text-white rounded-btnRadius shadow-btnShadow"
             >
               Get in touch
             </Link>
 
             <Link
               to="/programs"
-              className="border border-white/40 px-4 py-3 rounded"
+              className="border border-white/40 px-4 py-3 rounded-btnRadius shadow-btnShadow"
             >
               View programs
             </Link>
