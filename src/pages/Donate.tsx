@@ -134,10 +134,10 @@ export default function Donate() {
             Confirmation sent to {details.email.trim()}.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <button type="button" className={btnPrimary} onClick={resetFlow}>
+            <button type="button" className={`${btnPrimary} px-4 py-3`} onClick={resetFlow}>
               Make another donation
             </button>
-            <Link to="/" className={btnSecondary}>Back home</Link>
+            <Link to="/" className={`${btnSecondary} px-4 py-3`}>Back home</Link>
           </div>
         </div>
       </section>
@@ -244,7 +244,7 @@ export default function Donate() {
                   <p className="mt-1 text-xs text-red-600">{amountError}</p>
                 )}
               </div>
-              <button type="button" className={`${btnPrimary} w-full`} onClick={goNext}>
+              <button type="button" className={`${btnPrimary} w-full px-4 py-3`} onClick={goNext}>
                 Continue
               </button>
             </div>
@@ -321,10 +321,10 @@ export default function Donate() {
                 </div>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row-reverse">
-                <button type="button" className={`${btnPrimary} w-full sm:flex-1`} onClick={goNext}>
+                <button type="button" className={`${btnPrimary} w-full sm:flex-1 px-4 py-3`} onClick={goNext}>
                   Review
                 </button>
-                <button type="button" className={`${btnSecondary} w-full sm:flex-1`} onClick={() => setStep(1)}>
+                <button type="button" className={`${btnSecondary} w-full sm:flex-1 px-4 py-3`} onClick={() => setStep(1)}>
                   Back
                 </button>
               </div>
@@ -359,8 +359,8 @@ export default function Donate() {
                 By confirming, you agree to our use of your details only to process this donation and communicate with you about it.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row-reverse">
-                <button type="submit" className={`${btnPrimary} w-full sm:flex-1`}>Confirm donation</button>
-                <button type="button" className={`${btnSecondary} w-full sm:flex-1`} onClick={() => setStep(2)}>Edit details</button>
+                <button type="submit" className={`${btnPrimary} w-full sm:flex-1 px-4 py-3`}>Confirm donation</button>
+                <button type="button" className={`${btnSecondary} w-full sm:flex-1 px-4 py-3`} onClick={() => setStep(2)}>Edit details</button>
               </div>
             </div>
           )}
