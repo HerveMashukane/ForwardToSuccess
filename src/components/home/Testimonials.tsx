@@ -44,9 +44,9 @@ export default function Testimonials() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
 
-  const SLIDE_INTERVAL = 3500;
+  const SLIDE_INTERVAL = 3200;
 
-  // AUTO LOOP
+  // AUTO LOOP (SAME AS TEAM)
   useEffect(() => {
     if (paused) return;
 
@@ -57,8 +57,20 @@ export default function Testimonials() {
     return () => clearInterval(id);
   }, [paused]);
 
-  // DUPLICATE ARRAY FOR SMOOTH INFINITE EFFECT
-  const extended = [...testimonials, ...testimonials];
+  // GET 3 ITEMS (LEFT, CENTER, RIGHT)
+  const getVisible = () => {
+    const prev =
+      (index - 1 + testimonials.length) % testimonials.length;
+    const next = (index + 1) % testimonials.length;
+
+    return [
+      testimonials[prev],
+      testimonials[index],
+      testimonials[next],
+    ];
+  };
+
+  const visible = getVisible();
 
   return (
     <section
@@ -76,54 +88,49 @@ export default function Testimonials() {
         </p>
       </div>
 
-      {/* CAROUSEL WRAPPER */}
-      <div className="mx-auto max-w-6xl overflow-hidden">
-        <div
-          className="flex gap-6 transition-transform duration-700 ease-in-out"
-          style={{
-            transform: `translateX(-${index * 33.333}%)`,
-          }}
-        >
-          {extended.map((t, i) => {
-            const realIndex = i % testimonials.length;
-            const isCenter = realIndex === index % testimonials.length;
+      {/* CARDS */}
+      <div className="mx-auto max-w-6xl flex justify-center items-center gap-6 relative">
 
-            return (
-              <div
-                key={i}
-                className="min-w-[33.333%] flex-shrink-0 rounded-2xl border border-gray-100 bg-white p-8 shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-xl"
-                style={{
-                  transform: isCenter ? "scale(1.05)" : "scale(0.95)",
-                  opacity: isCenter ? 1 : 0.85,
-                }}
-              >
-                {/* IMAGE */}
-                <div className="flex justify-center mb-4">
-                  <img
-                    src={t.avatar}
-                    alt={t.name}
-                    className="h-16 w-16 rounded-full object-cover ring-2 ring-brand-accent/30 transition-transform duration-300 hover:scale-110"
-                  />
-                </div>
+        {visible.map((t, i) => {
+          const isCenter = i === 1;
 
-                {/* QUOTE */}
-                <p className="text-gray-600 text-center italic mb-6">
-                  “{t.quote}”
-                </p>
-
-                {/* NAME */}
-                <h3 className="text-center font-semibold text-brand-secondary">
-                  {t.name}
-                </h3>
-
-                <p className="text-center text-sm text-gray-500">{t.role}</p>
+          return (
+            <div
+              key={t.name}
+              className={`w-[300px] rounded-2xl border border-gray-100 bg-white p-8 shadow-lg transition-all duration-700 ${
+                isCenter
+                  ? "scale-105 opacity-100 z-10"
+                  : "scale-95 opacity-60 z-0"
+              }`}
+            >
+              {/* IMAGE */}
+              <div className="flex justify-center mb-4">
+                <img
+                  src={t.avatar}
+                  alt={t.name}
+                  className="h-16 w-16 rounded-full object-cover ring-2 ring-brand-accent/30"
+                />
               </div>
-            );
-          })}
-        </div>
+
+              {/* QUOTE */}
+              <p className="text-gray-600 text-center italic mb-6">
+                “{t.quote}”
+              </p>
+
+              {/* NAME */}
+              <h3 className="text-center font-semibold text-brand-secondary">
+                {t.name}
+              </h3>
+
+              <p className="text-center text-sm text-gray-500">
+                {t.role}
+              </p>
+            </div>
+          );
+        })}
       </div>
 
-      {/* DOT NAVIGATION */}
+      {/* DOTS */}
       <div className="mt-8 flex justify-center gap-2">
         {testimonials.map((_, i) => (
           <button
