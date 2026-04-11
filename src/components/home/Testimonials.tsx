@@ -89,7 +89,7 @@ export default function Testimonials() {
       </div>
 
       {/* CARDS */}
-      <div className="mx-auto max-w-6xl flex justify-center items-center gap-6 relative">
+      <div className="mx-auto max-w-6xl flex md:justify-center items-stretch gap-4 md:gap-6 relative overflow-x-auto md:overflow-visible px-2">
 
         {visible.map((t, i) => {
           const isCenter = i === 1;
@@ -97,32 +97,40 @@ export default function Testimonials() {
           return (
             <div
               key={t.name}
-              className={`w-[300px] rounded-2xl border border-gray-100 bg-white p-8 shadow-lg transition-all duration-700 ${
-                isCenter
-                  ? "scale-105 opacity-100 z-10"
-                  : "scale-95 opacity-60 z-0"
-              }`}
+              className={`
+                flex-shrink-0
+                w-[85%] sm:w-[70%] md:w-[300px]
+                rounded-2xl border border-gray-100 bg-white
+                p-6 md:p-8
+                shadow-md md:shadow-lg
+                transition-all duration-700
+                ${
+                  isCenter
+                    ? "md:scale-105 md:opacity-100 z-10"
+                    : "md:scale-95 md:opacity-60 z-0"
+                }
+              `}
             >
               {/* IMAGE */}
               <div className="flex justify-center mb-4">
                 <img
                   src={t.avatar}
                   alt={t.name}
-                  className="h-16 w-16 rounded-full object-cover ring-2 ring-brand-accent/30"
+                  className="h-14 w-14 md:h-16 md:w-16 rounded-full object-cover ring-2 ring-brand-accent/30"
                 />
               </div>
 
               {/* QUOTE */}
-              <p className="text-gray-600 text-center italic mb-6">
+              <p className="text-gray-600 text-sm md:text-base text-center italic mb-5 md:mb-6">
                 “{t.quote}”
               </p>
 
               {/* NAME */}
-              <h3 className="text-center font-semibold text-brand-secondary">
+              <h3 className="text-center font-semibold text-brand-secondary text-sm md:text-base">
                 {t.name}
               </h3>
 
-              <p className="text-center text-sm text-gray-500">
+              <p className="text-center text-xs md:text-sm text-gray-500">
                 {t.role}
               </p>
             </div>
