@@ -1,9 +1,18 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import TeamAvatar from "../components/ui/TeamAvatar";
-import herve from "../assets/images/team/herve.jpg";
+
+/* =======================
+   IMAGES
+======================= */
+
+import herve from "../assets/images/team/herve.jpg"
 import manasse from "../assets/images/team/manasse.jpg";
 import patricia from "../assets/images/team/patricia.jpg";
+
+/* =======================
+   TYPES
+======================= */
 
 type TeamMember = {
   name: string;
@@ -11,73 +20,238 @@ type TeamMember = {
   avatar: string;
 };
 
-const teamMembers: TeamMember[] = [
-  { name: "Hervé Mashukane", role: "CEO & Founder", avatar: herve },
-  { name: "Manasse Aksanti", role: "CTO & Co-Founder", avatar: manasse },
-  { name: "Patricia Masiri", role: "Training Officer", avatar: patricia },
+type TeamGroup = {
+  title: string;
+  icon: string;
+  members: TeamMember[];
+};
+
+/* =======================
+   FULL ASBL STRUCTURE
+======================= */
+
+const teamGroups: TeamGroup[] = [
+  {
+    title: "Leadership",
+    icon: "bi-person-badge-fill",
+    members: [
+      {
+        name: "Bright Mugabe",
+        role: "Executive Director & English / Spanish Instructor",
+        avatar: herve,
+      },
+      {
+        name: "Hervé Mashukane",
+        role: "Head of Technology & Finance / English & Programming Instructor",
+        avatar: herve,
+      },
+      {
+        name: "Patricia Masiri",
+        role: "Training Officer & English Instructor",
+        avatar: patricia,
+      },
+    ],
+  },
+  // {
+  //   title: "Training & Academic Coordination",
+  //   icon: "bi-mortarboard",
+  //   members: [
+  //     {
+  //       name: "Patricia Masiri",
+  //       role: "Training Officer & English Instructor",
+  //       avatar: patricia,
+  //     },
+  //   ],
+  // },
+  {
+    title: "Communication & Marketing",
+    icon: "bi-megaphone-fill",
+    members: [
+      {
+        name: "Manasse Aksanti",
+        role: "Head of Communications & Marketing / English Instructor",
+        avatar: manasse,
+      },
+      {
+        name: "Fadhili Nfundiko",
+        role: "Communications Assistant",
+        avatar: manasse,
+      },
+    ],
+  },
+  {
+    title: "English Department",
+    icon: "bi-translate",
+    members: [
+      {
+        name: "Guylaine Kashingi",
+        role: "English Instructor",
+        avatar: patricia,
+      },
+      {
+        name: "Jansen Magambo",
+        role: "English & Computer Science Instructor",
+        avatar: manasse,
+      },
+      {
+        name: "Sylvie Bululu",
+        role: "Head of Alumni Program & English Instructor",
+        avatar: herve,
+      },
+      {
+        name: "Daniel Akilimali",
+        role: "Alumni Program Assistant & English Instructor",
+        avatar: manasse,
+      },
+      {
+        name: "Precious Heshima",
+        role: "Alumni Program Assistant & English Instructor",
+        avatar: patricia,
+      },
+    ],
+  },
+  {
+    title: "Languages & Cultural Programs",
+    icon: "bi-globe2-fill",
+    members: [
+      {
+        name: "Authentique Binombe",
+        role: "Spanish & Chinese Instructor / Head of Cultural Activities",
+        avatar: herve,
+      },
+      {
+        name: "Breeder Sumbwa",
+        role: "Spanish, Chinese & Computer Science Instructor",
+        avatar: manasse,
+      },
+    ],
+  },
+  {
+    title: "Beauty & Makeup",
+    icon: "bi-brush-fill",
+    members: [
+      {
+        name: "Anne-Marie Semba",
+        role: "Makeup Specialist",
+        avatar: patricia,
+      },
+    ],
+  },
 ];
+/* =======================
+   TEAM CAROUSEL (FIXED)
+======================= */
+
+function TeamSection() {
+  const [groupIndex, setGroupIndex] = useState(0);
+  const [memberIndex, setMemberIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  const group = teamGroups[groupIndex];
+  const member = group.members[memberIndex];
+
+  useEffect(() => {
+    if (paused) return;
+
+    const id = setInterval(() => {
+      setMemberIndex((prevMember) => {
+        const isLastMember = prevMember + 1 >= group.members.length;
+
+        if (!isLastMember) {
+          return prevMember + 1;
+        }
+
+        // move to next group
+        setGroupIndex((prevGroup) => {
+          const nextGroup = (prevGroup + 1) % teamGroups.length;
+
+          // reset member index when group changes
+          setMemberIndex(0);
+
+          return nextGroup;
+        });
+
+        return 0;
+      });
+    }, 3200);
+
+    return () => clearInterval(id);
+  }, [paused, group.members.length, groupIndex]);
+
+  return (
+    <div
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      className="space-y-6"
+    >
+      {/* GROUP HEADER */}
+      <h2 className="flex items-center gap-2 text-heading3 font-bold text-brand-secondary">
+        <i className={`bi ${group.icon} text-brand-primary`} />
+        {group.title}
+      </h2>
+
+      {/* MEMBER CARD */}
+      <div className="rounded-2xl bg-white p-8 text-center shadow-lg transition-all duration-700">
+        <TeamAvatar
+          name={member.name}
+          avatar={member.avatar}
+          className="mx-auto mb-4"
+        />
+
+        <h3 className="text-xl font-semibold text-brand-secondary">
+          {member.name}
+        </h3>
+
+        <p className="text-gray-600 mt-1">{member.role}</p>
+
+        <p className="mt-2 text-xs uppercase tracking-wide text-gray-400">
+          Forward To Success Team
+        </p>
+      </div>
+
+      {/* DOT NAV */}
+      <div className="flex justify-center gap-2">
+        {group.members.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setMemberIndex(i)}
+            className={`h-2 rounded-full transition-all ${
+              i === memberIndex
+                ? "w-8 bg-brand-primary"
+                : "w-2 bg-gray-300"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* =======================
+   MAIN PAGE
+======================= */
 
 export default function About() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
-
-  // AUTOPLAY
-  useEffect(() => {
-    if (isPaused) return;
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % teamMembers.length);
-    }, 4500);
-
-    return () => clearInterval(interval);
-  }, [isPaused]);
-
-  // NAVIGATION
-  const goNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % teamMembers.length);
-  };
-
-  const goPrev = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? teamMembers.length - 1 : prev - 1
-    );
-  };
-
-  // SWIPE
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.changedTouches[0].screenX;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    touchEndX.current = e.changedTouches[0].screenX;
-    const diff = touchStartX.current - touchEndX.current;
-
-    if (diff > 50) goNext();
-    if (diff < -50) goPrev();
-  };
-
   return (
     <div className="bg-brand-background text-gray-800">
 
       {/* INTRO */}
-      <section className="border-b border-gray-100 bg-gradient-to-b from-white to-page px-6 py-16 md:px-16 md:py-24">
+      <section className="border-b bg-gradient-to-b from-white to-page px-6 py-16 md:px-16 md:py-24">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-brand-primary">
+
+          <p className="text-sm uppercase tracking-widest text-brand-primary font-semibold">
             Our story
           </p>
 
-          <h1 className="mb-6 text-heading3 font-bold text-brand-secondary md:text-heading1">
-            About ForwardToSuccess
+          <h1 className="text-heading3 md:text-heading1 font-bold text-brand-secondary mb-6">
+            About Forward To Success
           </h1>
 
-          <p className="text-lg leading-relaxed text-gray-600 md:text-xl">
-            Forward To Success exists to make real-world skills accessible—
-            from language fluency to digital expertise—so anyone committed to
-            growth can unlock new opportunities, careers, and confidence.
+          <p className="text-lg text-gray-600 md:text-xl leading-relaxed">
+            Forward To Success is an educational institution focused on languages,
+            digital skills, and empowerment through practical training.
           </p>
+
         </div>
       </section>
 
@@ -85,25 +259,31 @@ export default function About() {
       <section className="px-6 py-16 md:px-16 md:py-24">
         <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2">
 
-          <article className="rounded-2xl border border-gray-100 bg-white p-8 shadow-section hover:shadow-md transition">
-            <h2 className="mb-3 text-heading3 font-bold text-brand-secondary">
-              Mission
-            </h2>
+          <article className="group flex flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-section transition duration-300 hover:-translate-y-1 hover:border-brand-primary/20 hover:shadow-lg">
+            <div className="flex space-x-2">
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary transition group-hover:bg-brand-primary group-hover:text-white">
+               <i className="bi bi-bullseye text-heading3" aria-hidden/>
+              </div>
+              <h2 className="flex items-center gap-2 text-heading3 font-bold text-brand-secondary mb-3">
+                Mission
+              </h2>
+            </div>
             <p className="text-gray-600">
-              Deliver accessible, practical education—especially free language
-              programs—so learners can communicate with confidence and compete
-              in a connected world.
+              Deliver accessible education and practical skills training for languages, technology, and personal development.
             </p>
           </article>
 
-          <article className="rounded-2xl border border-gray-100 bg-white p-8 shadow-section hover:shadow-md transition">
-            <h2 className="mb-3 text-heading3 font-bold text-brand-secondary">
-              Vision
-            </h2>
+          <article className="group flex flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-section transition duration-300 hover:-translate-y-1 hover:border-brand-primary/20 hover:shadow-lg">
+            <div className="flex space-x-2">
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary transition group-hover:bg-brand-primary group-hover:text-white">
+                <i className="bi bi-eye text-heading3" aria-hidden/>
+              </div>
+              <h2 className="flex items-center gap-2 text-heading3 font-bold text-brand-secondary mb-3">
+                Vision
+              </h2>
+            </div>
             <p className="text-gray-600">
-              A community where every motivated learner—regardless of
-              background—can build skills that translate into real-world
-              opportunities.
+              Build a community where every learner can transform skills into real opportunities.
             </p>
           </article>
 
@@ -114,126 +294,49 @@ export default function About() {
       <section className="bg-page px-6 py-16 md:px-16 md:py-24">
         <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-2">
 
-          {/* LEFT */}
           <div>
-            <h2 className="mb-4 text-heading3 font-bold text-brand-secondary">
+            <h2 className="flex items-center gap-2 text-heading3 font-bold text-brand-secondary mb-4">
+              <i className="bi bi-people-fill text-brand-primary" />
               Who we are
             </h2>
 
-            <p className="mb-4 text-gray-600">
-              We provide high-quality training in English, French, Spanish,
-              and Chinese, alongside professional programs in Computer Science
-              and make-up artistry.
+            <p className="text-gray-600 mb-4">
+              We are an educational institution offering structured training in languages, programming, communication, and cultural development.
             </p>
 
             <p className="text-gray-600">
-              Our programs are built around real-world practice, guided by
-              experienced trainers committed to your growth.
+              Our team is organized into departments to ensure quality education delivery and student success.
             </p>
           </div>
 
-          {/* RIGHT - TEAM CAROUSEL */}
           <div>
-            <h2 className="mb-2 text-heading3 font-bold text-brand-secondary">
-              Meet the team
-            </h2>
-
-            <div
-              className="relative mx-auto min-h-[260px] max-w-md"
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleTouchEnd}
-            >
-
-              {teamMembers.map((member, index) => (
-                <div
-                  key={index}
-                  className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ${
-                    index === currentIndex
-                      ? "opacity-100 scale-100 z-10"
-                      : "opacity-0 scale-95 z-0 pointer-events-none"
-                  }`}
-                >
-                  <div className="w-full rounded-2xl bg-white p-8 text-center shadow-lg">
-
-                    <TeamAvatar
-                      name={member.name}
-                      avatar={member.avatar}
-                      className="mx-auto mb-4"
-                    />
-
-                    <h3 className="text-xl font-semibold text-brand-secondary">
-                      {member.name}
-                    </h3>
-
-                    <p className="text-gray-600 mt-1">
-                      {member.role}
-                    </p>
-                    <p className="mt-2 text-xs uppercase tracking-wide text-gray-400">
-                      Forward To Success Team
-                    </p>
-                  </div>
-                </div>
-              ))}
-
-              {/* ARROWS */}
-              <button
-                onClick={goPrev}
-                className="absolute left-0 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow"
-              >
-                ‹
-              </button>
-
-              <button
-                onClick={goNext}
-                className="absolute right-0 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow"
-              >
-                ›
-              </button>
-            </div>
-
-            {/* DOTS */}
-            <div className="mt-6 flex justify-center gap-2">
-              {teamMembers.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrentIndex(i)}
-                  className={`h-2 rounded-full ${
-                    i === currentIndex
-                      ? "w-8 bg-brand-primary"
-                      : "w-2 bg-gray-300"
-                  }`}
-                />
-              ))}
-            </div>
+            <TeamSection />
           </div>
+
         </div>
       </section>
 
       {/* IMPACT */}
       <section className="px-6 py-16 md:px-16 md:py-24">
-        <h2 className="mb-10 text-center text-heading3 font-bold text-brand-secondary">
+        <h2 className="text-center text-heading3 font-bold text-brand-secondary mb-10">
           Impact at a glance
         </h2>
 
         <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { value: "500+", label: "Students trained" },
-            { value: "5+", label: "Programs offered" },
-            { value: "Free", label: "Core language courses" },
-            { value: "Expert", label: "Certified trainers" },
+            { value: "6+", label: "Departments" },
+            { value: "Free", label: "Core programs" },
+            { value: "Expert", label: "Professional trainers" },
           ].map((item) => (
             <div
               key={item.label}
-              className="rounded-2xl bg-white p-6 text-center shadow-section hover:shadow-lg transition"
+              className="rounded-2xl bg-white p-6 text-center shadow-section transition duration-300 hover:-translate-y-1 hover:border-brand-primary/20 hover:shadow-lg"
             >
               <p className="text-3xl font-bold text-brand-accent">
                 {item.value}
               </p>
-              <p className="text-gray-600 mt-2">
-                {item.label}
-              </p>
+              <p className="text-gray-600 mt-2">{item.label}</p>
             </div>
           ))}
         </div>
@@ -241,28 +344,19 @@ export default function About() {
 
       {/* VALUES */}
       <section className="bg-page px-6 py-16 md:px-16 md:py-24">
-        <h2 className="mb-10 text-center text-heading3 font-bold text-brand-secondary">
+        <h2 className="text-center text-heading3 font-bold text-brand-secondary mb-10">
           Our core values
         </h2>
 
         <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
           {[
-            {
-              title: "Accessibility",
-              desc: "Education should be available regardless of background.",
-            },
-            {
-              title: "Practical learning",
-              desc: "We focus on real-world skills and application.",
-            },
-            {
-              title: "Excellence",
-              desc: "We maintain high standards in teaching and outcomes.",
-            },
+            { title: "Accessibility", desc: "Education for everyone regardless of background." },
+            { title: "Practical Learning", desc: "Real-world skills applied directly." },
+            { title: "Excellence", desc: "High-quality teaching and structure." },
           ].map((item) => (
             <div
               key={item.title}
-              className="rounded-2xl bg-white p-8 text-center shadow-section"
+              className="rounded-2xl bg-white p-8 text-center shadow-section transition duration-300 hover:-translate-y-1 hover:border-brand-primary/20 hover:shadow-lgshadow-section"
             >
               <h3 className="text-brand-accent font-bold mb-3">
                 {item.title}
@@ -282,24 +376,19 @@ export default function About() {
           </h2>
 
           <p className="mb-6 text-white/90">
-            Take the next step toward fluency, technical skills, and confidence.
+            Join Forward To Success and build real skills for the future.
           </p>
 
           <div className="flex justify-center gap-4">
-            <Link
-              to="/contact"
-              className="bg-brand-accent px-4 py-3 text-white rounded-btnRadius shadow-btnShadow"
-            >
+            <Link to="/contact" className="bg-brand-accent px-4 py-3 rounded-btnRadius">
               Get in touch
             </Link>
 
-            <Link
-              to="/programs"
-              className="border border-white/40 px-4 py-3 rounded-btnRadius shadow-btnShadow"
-            >
+            <Link to="/programs" className="border border-white/40 px-4 py-3 rounded-btnRadius">
               View programs
             </Link>
           </div>
+
         </div>
       </section>
 
