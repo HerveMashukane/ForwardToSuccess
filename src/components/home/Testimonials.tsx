@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import herve from "../../assets/images/team/herve.jpg";
-import manasse from "../../assets/images/team/manasse.jpg";
-import patricia from "../../assets/images/team/patricia.jpg";
 
 export type Testimonial = {
   quote: string;
@@ -13,30 +10,30 @@ export type Testimonial = {
 const testimonials: Testimonial[] = [
   {
     quote:
-      "The English program gave me confidence to work with international clients.",
-    name: "Dorcas Muhindo",
+      "The English program gave me confidence to connect with international NGOs.",
+    name: "Benedicte Nikuze",
     role: "Alumni · English graduate",
-    avatar: herve,
+    avatar: "",
   },
   {
     quote:
       "I started from zero in French and now I can hold real conversations.",
-    name: "Jean-Paul Agizo",
+    name: "Anifa Nsekuye",
     role: "Student · French track",
-    avatar: patricia,
+    avatar: "",
   },
   {
     quote:
       "Computer Science fundamentals were explained clearly and practical.",
-    name: "Cham's R.",
+    name: "Bruno Usungu",
     role: "Student · Junior developer",
-    avatar: manasse,
+    avatar: "",
   },
   {
     quote: "Make-up classes helped me start freelancing quickly.",
-    name: "Christelle K.",
+    name: "Herve Mashukane",
     role: "Alumni · Freelance artist",
-    avatar: herve,
+    avatar: "",
   },
 ];
 
@@ -89,7 +86,7 @@ export default function Testimonials() {
       </div>
 
       {/* CARDS */}
-      <div className="mx-auto max-w-6xl flex md:justify-center items-stretch gap-4 md:gap-6 relative overflow-x-auto md:overflow-visible px-2">
+      <div className="mx-auto max-w-6xl flex md:justify-center items-stretch gap-4 md:gap-6 relative overflow-x-auto md:overflow-visible px-2 ">
 
         {visible.map((t, i) => {
           const isCenter = i === 1;

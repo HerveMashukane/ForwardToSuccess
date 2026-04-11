@@ -90,7 +90,7 @@ export default function Footer() {
 
       {/* Bottom */}
       <div className="mx-auto mt-12 max-w-7xl border-t border-gray-800 pt-6 text-center text-xs text-gray-500 flex flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-4">
-        <span>© {new Date().getFullYear()} ForwardToSuccess</span>
+        <span>©{new Date().getFullYear()} ForwardToSuccess</span>
         <span className="flex items-center gap-1">
           Made with{" "}
           <i className="bi bi-heart-fill text-brand-accent animate-pulse" aria-hidden /> by Hervé Mashukane

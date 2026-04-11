@@ -5,10 +5,16 @@ import TeamAvatar from "../components/ui/TeamAvatar";
 /* =======================
    IMAGES
 ======================= */
-
-import herve from "../assets/images/team/herve.jpg"
+import bright from "../assets/images/team/bright.png";
+import herve from "../assets/images/team/herve.jpg";
+import patricia from "../assets/images/team/patricia.png";
 import manasse from "../assets/images/team/manasse.jpg";
-import patricia from "../assets/images/team/patricia.jpg";
+import fadhili from "../assets/images/team/fadhili.png";
+import jansen from "../assets/images/team/jansen.png";
+import breeder from "../assets/images/team/breeder.png";
+import guylaine from "../assets/images/team/guylaine.png";
+import sylvie from "../assets/images/team/sylvie.png";
+import marie from "../assets/images/team/marie.png";
 
 /* =======================
    TYPES
@@ -38,7 +44,7 @@ const teamGroups: TeamGroup[] = [
       {
         name: "Bright Mugabe",
         role: "Executive Director & English / Spanish Instructor",
-        avatar: herve,
+        avatar: bright,
       },
       {
         name: "Hervé Mashukane",
@@ -75,7 +81,7 @@ const teamGroups: TeamGroup[] = [
       {
         name: "Fadhili Nfundiko",
         role: "Communications Assistant",
-        avatar: manasse,
+        avatar: fadhili,
       },
     ],
   },
@@ -86,43 +92,43 @@ const teamGroups: TeamGroup[] = [
       {
         name: "Guylaine Kashingi",
         role: "English Instructor",
-        avatar: patricia,
+        avatar: guylaine,
       },
       {
         name: "Jansen Magambo",
         role: "English & Computer Science Instructor",
-        avatar: manasse,
+        avatar: jansen,
       },
       {
         name: "Sylvie Bululu",
         role: "Head of Alumni Program & English Instructor",
-        avatar: herve,
+        avatar: sylvie,
       },
       {
         name: "Daniel Akilimali",
         role: "Alumni Program Assistant & English Instructor",
-        avatar: manasse,
+        avatar: "",
       },
       {
         name: "Precious Heshima",
         role: "Alumni Program Assistant & English Instructor",
-        avatar: patricia,
+        avatar: "",
       },
     ],
   },
   {
     title: "Languages & Cultural Programs",
-    icon: "bi-globe2-fill",
+    icon: "bi-globe2",
     members: [
       {
         name: "Authentique Binombe",
         role: "Spanish & Chinese Instructor / Head of Cultural Activities",
-        avatar: herve,
+        avatar: "",
       },
       {
         name: "Breeder Sumbwa",
         role: "Spanish, Chinese & Computer Science Instructor",
-        avatar: manasse,
+        avatar: breeder,
       },
     ],
   },
@@ -133,7 +139,7 @@ const teamGroups: TeamGroup[] = [
       {
         name: "Anne-Marie Semba",
         role: "Makeup Specialist",
-        avatar: patricia,
+        avatar: marie,
       },
     ],
   },
@@ -195,7 +201,7 @@ function TeamSection() {
         <TeamAvatar
           name={member.name}
           avatar={member.avatar}
-          className="mx-auto mb-4"
+          className="mx-auto mb-4 ring-brand-accent/30 border-2 border-brand-accent/30"
         />
 
         <h3 className="text-xl font-semibold text-brand-secondary">
@@ -370,7 +376,6 @@ export default function About() {
       {/* CTA */}
       <section className="px-6 py-16 text-center md:px-16 md:py-24">
         <div className="mx-auto max-w-2xl bg-brand-primary text-white p-10 rounded-2xl">
-
           <h2 className="text-2xl font-bold mb-4">
             Start your journey today
           </h2>
@@ -379,19 +384,23 @@ export default function About() {
             Join Forward To Success and build real skills for the future.
           </p>
 
-          <div className="flex justify-center gap-4">
-            <Link to="/contact" className="bg-brand-accent px-4 py-3 rounded-btnRadius">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 w-full max-w-md mx-auto">
+            <Link
+              to="/contact"
+              className="w-full sm:w-auto text-center bg-brand-accent px-5 py-3 rounded-btnRadius text-white font-medium transition hover:opacity-90"
+            >
               Get in touch
             </Link>
 
-            <Link to="/programs" className="border border-white/40 px-4 py-3 rounded-btnRadius">
+            <Link
+              to="/programs"
+              className="w-full sm:w-auto text-center border border-white/40 px-5 py-3 rounded-btnRadius text-white font-medium transition hover:bg-white/10"
+            >
               View programs
             </Link>
           </div>
-
         </div>
       </section>
-
     </div>
   );
 }
