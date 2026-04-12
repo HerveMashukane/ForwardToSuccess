@@ -14,27 +14,27 @@ export type Testimonial = {
 const testimonials: Testimonial[] = [
   {
     quote:
-      "The English program gave me confidence to connect with international NGOs.",
+      "Forward To Success provided me with solid foundations in computer science and strengthened my problem-solving skills. The training has prepared me to confidently pursue opportunities in the tech field.",
     name: "Benedicte Nikuze",
-    role: "Alumni · English graduate",
+    role: "Student · Junier developer",
     avatar: benedict,
   },
   {
     quote:
-      "Computer Science fundamentals were explained clearly and practical.",
+      "Forward To Success provided quality training that strengthened my skills and confidence. I highly recommend it for personal and professional growth.",
     name: "Bruno Usungu",
-    role: "Student · Junior developer",
+    role: "Alumni · English graduate",
     avatar: bruno,
   },
   {
     quote:
-      "I started from zero in French and now I can hold real conversations.",
+      "Forward To Success enhanced my skills and confidence through dedicated training. I proudly recommend it to anyone seeking success.",
     name: "Anifa Nsekuye",
-    role: "Student · French track",
+    role: "Alumni · English graduate",
     avatar: anifa,
   },
   {
-    quote: "Make-up classes helped me start freelancing quickly.",
+    quote: "Forward To Success refined my skills and strengthened my confidence, allowing me to grow as a freelance artist. The training I received continues to impact my creative and professional journey.",
     name: "Marie Semba",
     role: "Alumni · Freelance artist",
     avatar: marie,
