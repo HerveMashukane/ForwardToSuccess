@@ -10,7 +10,7 @@ export default function TeamAvatar({ name, avatar, className }: Props) {
       <img
         src={avatar}
         alt={name}
-        className={`h-20 w-20 rounded-full object-cover border-2 border-white shadow-md ${className}`}
+        className={`h-20 w-20 rounded-full object-cover border-2 border-brand-primary/30 shadow-md ${className}`}
       />
     );
   }

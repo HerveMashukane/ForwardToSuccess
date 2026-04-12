@@ -8,13 +8,14 @@ import TeamAvatar from "../components/ui/TeamAvatar";
 import bright from "../assets/images/team/bright.png";
 import herve from "../assets/images/team/herve.jpg";
 import patricia from "../assets/images/team/patricia.png";
-import manasse from "../assets/images/team/manasse.jpg";
+import manasse from "../assets/images/team/manasse.png";
 import fadhili from "../assets/images/team/fadhili.png";
 import jansen from "../assets/images/team/jansen.png";
 import breeder from "../assets/images/team/breeder.png";
 import guylaine from "../assets/images/team/guylaine.png";
 import sylvie from "../assets/images/team/sylvie.png";
 import marie from "../assets/images/team/marie.png";
+import authentic from "../assets/images/team/authenctic.png";
 
 /* =======================
    TYPES
@@ -91,7 +92,7 @@ const teamGroups: TeamGroup[] = [
     members: [
       {
         name: "Guylaine Kashingi",
-        role: "English Instructor",
+        role: "English Instructor & Head of Teachers Practical Sessions",
         avatar: guylaine,
       },
       {
@@ -106,12 +107,12 @@ const teamGroups: TeamGroup[] = [
       },
       {
         name: "Daniel Akilimali",
-        role: "Alumni Program Assistant & English Instructor",
+        role: "English Instructor & Alumni Program Assistant",
         avatar: "",
       },
       {
         name: "Precious Heshima",
-        role: "Alumni Program Assistant & English Instructor",
+        role: "English Instructor & Alumni Program Assistant",
         avatar: "",
       },
     ],
@@ -121,9 +122,9 @@ const teamGroups: TeamGroup[] = [
     icon: "bi-globe2",
     members: [
       {
-        name: "Authentique Binombe",
+        name: "Authentic Binombe",
         role: "Spanish & Chinese Instructor / Head of Cultural Activities",
-        avatar: "",
+        avatar: authentic,
       },
       {
         name: "Breeder Sumbwa",
@@ -201,7 +202,7 @@ function TeamSection() {
         <TeamAvatar
           name={member.name}
           avatar={member.avatar}
-          className="mx-auto mb-4 ring-brand-accent/30 border-2 border-brand-accent/30"
+          className="mx-auto mb-4"
         />
 
         <h3 className="text-xl font-semibold text-brand-secondary">

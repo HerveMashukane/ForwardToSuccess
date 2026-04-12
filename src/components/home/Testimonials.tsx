@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import benedict from "../../assets/images/students/benedicte.png";
+import bruno from "../../assets/images/students/bruno.png";
+import anifa from "../../assets/images/students/anifa.png";
+import marie from "../../assets/images/team/marie.png"
 
 export type Testimonial = {
   quote: string;
@@ -13,27 +17,27 @@ const testimonials: Testimonial[] = [
       "The English program gave me confidence to connect with international NGOs.",
     name: "Benedicte Nikuze",
     role: "Alumni · English graduate",
-    avatar: "",
-  },
-  {
-    quote:
-      "I started from zero in French and now I can hold real conversations.",
-    name: "Anifa Nsekuye",
-    role: "Student · French track",
-    avatar: "",
+    avatar: benedict,
   },
   {
     quote:
       "Computer Science fundamentals were explained clearly and practical.",
     name: "Bruno Usungu",
     role: "Student · Junior developer",
-    avatar: "",
+    avatar: bruno,
+  },
+  {
+    quote:
+      "I started from zero in French and now I can hold real conversations.",
+    name: "Anifa Nsekuye",
+    role: "Student · French track",
+    avatar: anifa,
   },
   {
     quote: "Make-up classes helped me start freelancing quickly.",
-    name: "Herve Mashukane",
+    name: "Marie Semba",
     role: "Alumni · Freelance artist",
-    avatar: "",
+    avatar: marie,
   },
 ];
 
@@ -113,7 +117,7 @@ export default function Testimonials() {
                 <img
                   src={t.avatar}
                   alt={t.name}
-                  className="h-14 w-14 md:h-16 md:w-16 rounded-full object-cover ring-2 ring-brand-accent/30"
+                  className="h-14 w-14 md:h-16 md:w-16 rounded-full object-cover ring-2 ring-brand-primary/50"
                 />
               </div>
 
