@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import benedict from "../../assets/images/students/benedicte.png";
 import bruno from "../../assets/images/students/bruno.png";
 import anifa from "../../assets/images/students/anifa.png";
-import marie from "../../assets/images/team/marie.png"
+import marie from "../../assets/images/team/marie.png";
+import davina from "../../assets/images/students/davina.png";
 
 export type Testimonial = {
   quote: string;
@@ -32,6 +33,13 @@ const testimonials: Testimonial[] = [
     name: "Anifa Nsekuye",
     role: "Alumni · English graduate",
     avatar: anifa,
+  },
+  {
+    quote:
+      "FTS transformed my journey by building my skills and confidence. Today, I feel ready to succeed—supporting FTS means empowering youth and creating real impact.",
+    name: "Davina Byuma",
+    role: "Alumni · English graduate",
+    avatar: davina,
   },
   {
     quote: "Forward To Success refined my skills and strengthened my confidence, allowing me to grow as a freelance artist. The training I received continues to impact my creative and professional journey.",
