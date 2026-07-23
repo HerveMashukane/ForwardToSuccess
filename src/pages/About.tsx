@@ -16,6 +16,7 @@ import guylaine from "../assets/images/team/guylaine.png";
 import sylvie from "../assets/images/team/sylvie.png";
 import marie from "../assets/images/team/marie.png";
 import authentic from "../assets/images/team/authenctic.png";
+import daniel from "../assets/images/team/daniel.jpg";
 
 /* =======================
    TYPES
@@ -108,7 +109,7 @@ const teamGroups: TeamGroup[] = [
       {
         name: "Daniel Akilimali",
         role: "English Instructor & Alumni Program Assistant",
-        avatar: "",
+        avatar: daniel,
       },
       {
         name: "Precious Heshima",

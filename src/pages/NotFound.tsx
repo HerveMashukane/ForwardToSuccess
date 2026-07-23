@@ -16,7 +16,7 @@ export default function NotFound() {
       </p>
       <div className="flex flex-wrap justify-center gap-4">
         <Link to="/" className={btnPrimary}>
-          <i className="bi bi-house-fill" aria-hidden />
+          <i className="bi bi-house-fill" aria-hidden/>
           Home
         </Link>
         <Link to="/contact" className={btnSecondary}>

@@ -30,6 +30,10 @@ export default {
         glow: "0 0 30px rgba(29,78,216,0.3)",
         section: "0 4px 24px rgba(15, 23, 42, 0.06)",
       },
+        spacing: {
+        btnX: "1.25rem", // horizontal padding (20px)
+        btnY: "0.625rem", // vertical padding (10px)
+      },
       keyframes: {
         toastIn: {
           "0%": { opacity: "0", transform: "translateY(-12px) scale(0.98)" },

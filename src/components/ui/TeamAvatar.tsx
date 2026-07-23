@@ -1,6 +1,6 @@
 type Props = {
   name: string;
-  avatar?: string; // 👈 ADD THIS
+  avatar?: string;
   className?: string;
 };
 
