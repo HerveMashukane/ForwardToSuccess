@@ -46,7 +46,7 @@ export default function Footer() {
           <ul className="flex flex-wrap gap-6">
             {[
               { name: "Facebook", href: "https://www.facebook.com/share/1GK6mznd1v/?mibextid=wwXIfr", icon: "bi-facebook text-brand-primary" },
-              { name: "WhatsApp", href: "https://wa.me/+243901284995", icon: "bi-whatsapp text-green-500" },
+              { name: "WhatsApp", href: "https://wa.me/+243964886231", icon: "bi-whatsapp text-green-500" },
               { name: "TikTok", href: "https://www.tiktok.com/@forward.tosuccess5?_r=1&_t=ZS-95JeKGow8q8", icon: "bi-tiktok text-gray-300" },
               { name: "YouTube", href: "https://youtube.com/@ftsforwardtosuccess?si=np-QtgMgicW6CQQW", icon: "bi-youtube text-brand-accent" },
             ].map((social) => (
@@ -82,7 +82,7 @@ export default function Footer() {
               href="tel:+243901284995"
               className="transition duration-300 hover:text-white hover:underline"
             >
-              +243 901 284 995
+              +243 964 886 231
             </a>
           </p>
         </div>
