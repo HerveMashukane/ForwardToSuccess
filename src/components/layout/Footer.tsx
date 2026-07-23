@@ -79,7 +79,7 @@ export default function Footer() {
           </p>
           <p className="mt-2 text-small">
             <a
-              href="tel:+243901284995"
+              href="tel:+243964886231"
               className="transition duration-300 hover:text-white hover:underline"
             >
               +243 964 886 231
