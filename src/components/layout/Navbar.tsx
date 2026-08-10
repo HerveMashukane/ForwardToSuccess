@@ -114,9 +114,9 @@ export default function Navbar() {
               </div>
             </div>
 
-            <Link to="/donate" className="bg-brand-accent text-white flex items-center justify-center gap-2 mx-4 my-3 rounded-btnRadius px-4 py-3 text-sm font-semibold transition hover:bg-brand-accent-hover shadow-btnShadow">
+            {/* <Link to="/donate" className="bg-brand-accent text-white flex items-center justify-center gap-2 mx-4 my-3 rounded-btnRadius px-4 py-3 text-sm font-semibold transition hover:bg-brand-accent-hover shadow-btnShadow">
               <i className="bi bi-heart-fill" /> Donate
-            </Link>
+            </Link> */}
           </div>
 
           {/* MOBILE TOGGLE */}
