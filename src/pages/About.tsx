@@ -45,46 +45,35 @@ const teamGroups: TeamGroup[] = [
     members: [
       {
         name: "Bright Mugabe",
-        role: "Executive Director & English / Spanish Instructor",
+        role: "Executive Director & English Instructor",
         avatar: bright,
       },
       {
         name: "Hervé Mashukane",
-        role: "Head of Technology & Finance / English & Programming Instructor",
+        role: "Training Officer / English & Programming Instructor",
         avatar: herve,
       },
       {
         name: "Patricia Masiri",
-        role: "Training Officer & English Instructor",
+        role: "Head of Communications & Marketing / English Instructor",
         avatar: patricia,
       },
     ],
   },
-  // {
-  //   title: "Training & Academic Coordination",
-  //   icon: "bi-mortarboard",
-  //   members: [
-  //     {
-  //       name: "Patricia Masiri",
-  //       role: "Training Officer & English Instructor",
-  //       avatar: patricia,
-  //     },
-  //   ],
-  // },
   {
     title: "Communication & Marketing",
     icon: "bi-megaphone-fill",
     members: [
       {
-        name: "Manasse Aksanti",
-        role: "Head of Communications & Marketing / English Instructor",
-        avatar: manasse,
+        name: "Jansen Magambo",
+        role: "Communications Assistant / English & Computer Science Instructor",
+        avatar: jansen,
       },
       {
-        name: "Fadhili Nfundiko",
-        role: "Communications Assistant",
-        avatar: fadhili,
-      },
+        name: "Baeni Muhigirwa",
+        role: "Communications Assistant & English Instructor",
+        avatar: jansen,
+      }
     ],
   },
   {
@@ -97,13 +86,8 @@ const teamGroups: TeamGroup[] = [
         avatar: guylaine,
       },
       {
-        name: "Jansen Magambo",
-        role: "English & Computer Science Instructor",
-        avatar: jansen,
-      },
-      {
         name: "Sylvie Bululu",
-        role: "Head of Alumni Program & English Instructor",
+        role: "English Instructor & Finances Assistant",
         avatar: sylvie,
       },
       {
@@ -119,7 +103,7 @@ const teamGroups: TeamGroup[] = [
     ],
   },
   {
-    title: "Languages & Cultural Programs",
+    title: "Other languages & Cultural Programs",
     icon: "bi-globe2",
     members: [
       {
@@ -139,7 +123,7 @@ const teamGroups: TeamGroup[] = [
     icon: "bi-brush-fill",
     members: [
       {
-        name: "Anne-Marie Semba",
+        name: "Robert Maonero",
         role: "Makeup Specialist",
         avatar: marie,
       },
