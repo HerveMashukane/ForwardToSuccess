@@ -99,7 +99,7 @@ export default function Home() {
 
               <div className="flex items-center gap-2">
                 <i className="bi bi-people-fill text-brand-primary" />
-                <span>500+ Students</span>
+                <span>2000+ Students trained</span>
               </div>
 
               <div className="flex items-center gap-2">
