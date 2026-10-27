@@ -12,7 +12,7 @@ import jansen from "../assets/images/team/jansen.png";
 import breeder from "../assets/images/team/breeder.jpeg";
 import guylaine from "../assets/images/team/guylaine.png";
 import sylvie from "../assets/images/team/sylvie.png";
-import marie from "../assets/images/team/marie.png";
+import robert from "../assets/images/team/robert.jpeg";
 import authentic from "../assets/images/team/authenctic.png";
 import daniel from "../assets/images/team/daniel.jpeg";
 
@@ -123,7 +123,7 @@ const teamGroups: TeamGroup[] = [
       {
         name: "Robert Maonero",
         role: "Makeup Specialist",
-        avatar: marie,
+        avatar: robert,
       },
     ],
   },
