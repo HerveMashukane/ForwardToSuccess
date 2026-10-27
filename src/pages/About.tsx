@@ -7,14 +7,14 @@ import TeamAvatar from "../components/ui/TeamAvatar";
 ======================= */
 import bright from "../assets/images/team/bright.png";
 import herve from "../assets/images/team/herve.jpg";
-import patricia from "../assets/images/team/patricia.png";
+import patricia from "../assets/images/team/patricia.jpeg";
 import jansen from "../assets/images/team/jansen.png";
-import breeder from "../assets/images/team/breeder.png";
+import breeder from "../assets/images/team/breeder.jpeg";
 import guylaine from "../assets/images/team/guylaine.png";
 import sylvie from "../assets/images/team/sylvie.png";
 import marie from "../assets/images/team/marie.png";
 import authentic from "../assets/images/team/authenctic.png";
-import daniel from "../assets/images/team/daniel.jpg";
+import daniel from "../assets/images/team/daniel.jpeg";
 
 /* =======================
    TYPES
@@ -64,12 +64,12 @@ const teamGroups: TeamGroup[] = [
     members: [
       {
         name: "Jansen Magambo",
-        role: "Communications Assistant / English & Computer Science Instructor",
+        role: "Communications Team Member / English & Computer Science Instructor",
         avatar: jansen,
       },
       {
         name: "Baeni Muhigirwa",
-        role: "Communications Assistant & English Instructor",
+        role: "Communications Team Member & English Instructor",
         avatar: jansen,
       }
     ],
