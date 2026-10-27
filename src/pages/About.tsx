@@ -8,8 +8,6 @@ import TeamAvatar from "../components/ui/TeamAvatar";
 import bright from "../assets/images/team/bright.png";
 import herve from "../assets/images/team/herve.jpg";
 import patricia from "../assets/images/team/patricia.png";
-import manasse from "../assets/images/team/manasse.png";
-import fadhili from "../assets/images/team/fadhili.png";
 import jansen from "../assets/images/team/jansen.png";
 import breeder from "../assets/images/team/breeder.png";
 import guylaine from "../assets/images/team/guylaine.png";
@@ -316,7 +314,7 @@ export default function About() {
 
         <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { value: "500+", label: "Students trained" },
+            { value: "2000+", label: "Students trained" },
             { value: "6+", label: "Departments" },
             { value: "Free", label: "Core programs" },
             { value: "Expert", label: "Professional trainers" },

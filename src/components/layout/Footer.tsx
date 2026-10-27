@@ -74,7 +74,7 @@ export default function Footer() {
               href="mailto:forwardtosuccess@gmail.com"
               className="transition duration-300 hover:text-white hover:underline"
             >
-              forwardtosuccessfts@gmail.com
+              forwardtosuccess08@gmail.com
             </a>
           </p>
           <p className="mt-2 text-small">
