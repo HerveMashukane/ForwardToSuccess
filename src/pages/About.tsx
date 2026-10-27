@@ -9,6 +9,7 @@ import bright from "../assets/images/team/bright.png";
 import herve from "../assets/images/team/herve.jpg";
 import patricia from "../assets/images/team/patricia.jpeg";
 import jansen from "../assets/images/team/jansen.png";
+import baeni from "../assets/images/team/baeni.jpeg";
 import breeder from "../assets/images/team/breeder.jpeg";
 import guylaine from "../assets/images/team/guylaine.png";
 import sylvie from "../assets/images/team/sylvie.png";
@@ -70,7 +71,7 @@ const teamGroups: TeamGroup[] = [
       {
         name: "Baeni Muhigirwa",
         role: "Communications Team Member & English Instructor",
-        avatar: jansen,
+        avatar: baeni,
       }
     ],
   },
